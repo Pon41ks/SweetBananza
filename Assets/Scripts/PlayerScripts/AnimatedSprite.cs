@@ -6,39 +6,89 @@ public class AnimatedSprite : MonoBehaviour
 {
 
     [Header("Preference")]
-    [SerializeField] private Sprite[] sprites;
-    private SpriteRenderer spriteRenderer;
+    [SerializeField] private Sprite[] jumpSprites;
+    [SerializeField] private Sprite[] sitDownSprites;
+    [SerializeField] private Sprite[] hits;
+    [SerializeField] private Sprite runSprites;
+     private SpriteRenderer spriteRenderer;
+    
 
     private int frame;
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        
     }
 
     private void OnEnable()
     {
-        Invoke(nameof(Animate), 0f);  
+        StartCoroutine(Animate(jumpSprites, sitDownSprites, hits));
     }
     private void OnDisable()
     {
         CancelInvoke();
     }
 
-    private void Animate()
+    
+    private IEnumerator Animate(Sprite[] jumpSprites, Sprite[] sitDown, Sprite[] hits)
     {
-        frame++;
-        if(frame >= sprites.Length)
+       
+        for (float i = 0; i < 5; i += Time.deltaTime  )
         {
-            frame = 0;
+       
+            frame++;
+            if (Player.isJumping)
+            {
+                if (frame >= jumpSprites.Length)
+                {
+                    frame = 0;
+                }
+
+                if (frame >= 0 && frame < jumpSprites.Length)
+                {
+                    spriteRenderer.sprite = jumpSprites[frame];
+                  
+                }
+             
+            }
+            if (Player.isSitting)
+            {
+                if (frame >= sitDown.Length)
+                {
+                    frame = 0;
+                }
+                if (frame >= 0 && frame < sitDown.Length)
+                {
+                    spriteRenderer.sprite = sitDown[frame];
+
+                }
+            }
+            /*
+            else if (!Player.isCanHitting)
+            {
+                if (frame >= hits.Length)
+                {
+                    frame = 0;
+                }
+                if (frame >= 0 && frame < hits.Length)
+                {
+                    spriteRenderer.sprite = hits[frame];
+
+                }
+            }
+            */
+            else if (!Player.isJumping)
+            {
+                spriteRenderer.sprite = runSprites;
+            }
+            
+
+            yield return new WaitForSeconds( 1.1f /GameManager.Instance.gameSpeed);
+      
+            
         }
 
-        if(frame>= 0 && frame < sprites.Length)
-        {
-            spriteRenderer.sprite = sprites[frame];
-
-        }
-
-        Invoke(nameof(Animate), 1.1f / GameManager.Instance.gameSpeed);
     }
+
 }

@@ -8,6 +8,9 @@ TagManager:
   - Block
   - Enemy
   - Spawner
+  - Fruit
+  - Wheel
+  - HealthView
   layers:
   - Default
   - TransparentFX
