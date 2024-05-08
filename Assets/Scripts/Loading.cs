@@ -1,36 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class Loading : MonoBehaviour
+public class SceneLoader : MonoBehaviour
 {
 
-    [SerializeField] private Slider slider;
-    
-    private void Start()
-    {
-        StartCoroutine(AsyncLoading());
-    }
-  
+    [SerializeField]private Slider loadingSlider;
+    private bool isLoadingIsFinished;
 
-    IEnumerator AsyncLoading()
+    private void Update()
     {
-        AsyncOperation loadAsync = SceneManager.LoadSceneAsync(1);
-
-        loadAsync.allowSceneActivation = false;
-        while (!loadAsync.isDone)
+        if (isLoadingIsFinished)
         {
-            slider.value = loadAsync.progress;
-            if (loadAsync.progress > .89f && !loadAsync.allowSceneActivation)
-            {
-
-                yield return new WaitForSeconds(1);
-                loadAsync.allowSceneActivation = true;
-            }
-            yield return null;
+            Load();
         }
-
+        
+        for (int i = 0; i < 10; i++)
+        {
+            loadingSlider.value = i;
+            if (loadingSlider.value >= 0.9)
+            {
+                isLoadingIsFinished = true;
+            }
+        }
     }
+    private void Load()
+    {
+
+        SceneManager.LoadScene(1);
+    }
+
+
 }
+

@@ -10,10 +10,9 @@ public class Player : MonoBehaviour, IControllAble
     [SerializeField] private GameObject retryBatton;
     [SerializeField] private GameObject jumpButton;
     [SerializeField] private GameObject Wheelpanel;
+    [SerializeField] private GameObject player;
     private CharacterController character;
     public static Vector3 direction;
-
-
 
     [Header("Properties")]
     [SerializeField] private float gravity = 9.81f * 2;
@@ -26,7 +25,13 @@ public class Player : MonoBehaviour, IControllAble
     private void Awake()
     {
         character = GetComponent<CharacterController>();
+        
+    }
 
+    private void OnEnable()
+    {
+        isJumping = false;
+        
     }
 
 
@@ -34,6 +39,7 @@ public class Player : MonoBehaviour, IControllAble
     {
         direction += gravity * Time.deltaTime * Vector3.down;
         character.Move(direction * Time.deltaTime);
+        
     }
 
     public void Control()
@@ -61,7 +67,7 @@ public class Player : MonoBehaviour, IControllAble
             isJumping = true;
         }
         
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.7f);
         isJumping = false;
     }
 
@@ -69,12 +75,12 @@ public class Player : MonoBehaviour, IControllAble
     {
         if (!isSitting)
         {
-            character.height = 7;
+            character.height = 7.5f;
             isSitting = true;
         }
 
         yield return new WaitForSeconds(0.5f);
-
+        
         character.height = 9.11f;
         isSitting = false;
         

@@ -23,10 +23,7 @@ public class Chest : MonoBehaviour
         if (hasTreasure)
         {
             isChoose = true;
-            if (Player.healthPoints <= 4)
-            {
-                Player.healthPoints += 1;
-            }
+           
             
             Debug.Log("success");
         }

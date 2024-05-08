@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BonusGame : MonoBehaviour
 {
-    public  Chest[] chests;
+    [SerializeField] private  Chest[] chests;
     [SerializeField] private GameObject openChest;
     [SerializeField] private GameObject openChest2;
     [SerializeField] private GameObject content;
@@ -20,6 +20,7 @@ public class BonusGame : MonoBehaviour
         chests[index].hasTreasure = true;
         animate = FindAnyObjectByType<Animate>();
 
+        content.SetActive(true);
 
     }
 
@@ -27,6 +28,7 @@ public class BonusGame : MonoBehaviour
     {
         if (Chest.isChoose)
         {
+
             StartCoroutine(WinAnimation());
             Chest.isChoose = false;
             
@@ -54,7 +56,11 @@ public class BonusGame : MonoBehaviour
 
         bonusPanel.SetActive(false);
         animate.startPause = true;
-      
+        if (Player.healthPoints <= 4)
+        {
+            Player.healthPoints += 1;
+        }
+
     }
 
 }

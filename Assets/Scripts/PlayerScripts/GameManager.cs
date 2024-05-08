@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI highScoreText;
     [SerializeField] private TextMeshProUGUI gameOverText;
     [SerializeField] private GameObject bonus;
-    
+    [SerializeField] private GameObject playButton;
     
 
     public Button retryButton;
@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        
         gameSpeed = initialGameSpeed;
         SaveData.Current = (SaveData)SerializationManager.Load();
         if (Instance == null)
@@ -44,6 +45,10 @@ public class GameManager : MonoBehaviour
         {
             DestroyImmediate(gameObject);
         }
+        
+        retryButton.gameObject.SetActive(false);
+        gameOverText.gameObject.SetActive(false);
+        UpdateHighScore();
     }
 
     private void OnDestroy()
@@ -56,17 +61,19 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-
+        Time.timeScale = 0;
         SerializationManager.Save(SaveData.Current);
         player = FindObjectOfType<Player>();
         spawner = FindObjectOfType<Spawner>();
         health = FindAnyObjectByType<HealthView>();
-        NewGame();
+        //NewGame();
     }
+
 
     public void NewGame()
     {
         score = 0;
+        Time.timeScale = 1f;
         Player.healthPoints = healthPoints;
         Obstacles[] obstacles = FindObjectsOfType<Obstacles>();
         foreach (var obstacle in obstacles)
@@ -83,6 +90,7 @@ public class GameManager : MonoBehaviour
         health.gameObject.SetActive(true);
         gameOverText.gameObject.SetActive(false);
         retryButton.gameObject.SetActive(false);
+        playButton.SetActive(false);
 
         UpdateHighScore();
     }
@@ -110,19 +118,16 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-        
-            gameSpeed += gameSpeedEncrease * Time.deltaTime;
-            score += gameSpeed / 2f * Time.deltaTime;
-            scoreText.text = Mathf.RoundToInt(score).ToString("D5");
+       gameSpeed += gameSpeedEncrease * Time.deltaTime;
+       score += gameSpeed / 2f * Time.deltaTime;
+       scoreText.text = Mathf.RoundToInt(score).ToString("D5");
         if (score >= 100)
-        {
-            if (canOpenBonus)
             {
-                StartCoroutine(StartBonusGame());
+                if (canOpenBonus)
+                {
+                    StartCoroutine(StartBonusGame());
+                }
             }
-        }
-            
-
     }
 
     private void UpdateHighScore()
@@ -137,17 +142,11 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator StartBonusGame()
     {
-        
-        
             canOpenBonus = false;
             bonus.SetActive(true);
             Time.timeScale = 0f;
-
             yield return new WaitForSeconds(60);
             canOpenBonus = true;
-        
-          
-
     }
 
 }
