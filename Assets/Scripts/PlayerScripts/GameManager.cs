@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
     public float gameSpeedEncrease = 1f;
     private float score;
     private bool canOpenBonus = true;
-    private bool firstOpenBonus = true;
     private int healthPoints = 4;
 
 
@@ -34,7 +33,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        
+        Time.timeScale = 0;
         gameSpeed = initialGameSpeed;
         SaveData.Current = (SaveData)SerializationManager.Load();
         if (Instance == null)
@@ -61,7 +60,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        Time.timeScale = 0;
+        
         SerializationManager.Save(SaveData.Current);
         player = FindObjectOfType<Player>();
         spawner = FindObjectOfType<Spawner>();
@@ -97,6 +96,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        Time.timeScale = 0f;
         UpdateHighScore();
         SerializationManager.Save(SaveData.Current);
 
@@ -135,7 +135,6 @@ public class GameManager : MonoBehaviour
         if(score > SaveData.Current.highScore)
         {
             SaveData.Current.highScore = score;
-           
         }
         highScoreText.text = Mathf.RoundToInt(SaveData.Current.highScore).ToString("D5");
     }

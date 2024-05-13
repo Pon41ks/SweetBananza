@@ -16,7 +16,7 @@ public class Wheel : MonoBehaviour
 
     [SerializeField] private GameObject wheelPanel;
     [SerializeField] private GameObject spinButton;
-    [SerializeField]private Animate animate;
+    [SerializeField] private Animate animate;
     
     private void OnEnable()
     {

@@ -7,16 +7,14 @@ public class Player : MonoBehaviour, IControllAble
 {
 
     [Header("Preference")]
-    [SerializeField] private GameObject retryBatton;
-    [SerializeField] private GameObject jumpButton;
     [SerializeField] private GameObject Wheelpanel;
-    [SerializeField] private GameObject player;
     private CharacterController character;
     public static Vector3 direction;
 
     [Header("Properties")]
     [SerializeField] private float gravity = 9.81f * 2;
-    [SerializeField] private float jumpForce = 8f;
+    [SerializeField] private float jumpForce = 10f;
+    private Animator animator;
     public static bool isSitting;
     public static bool isJumping = false;
     public static bool isCanHitting = true;
@@ -25,13 +23,15 @@ public class Player : MonoBehaviour, IControllAble
     private void Awake()
     {
         character = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
         
     }
 
     private void OnEnable()
     {
         isJumping = false;
-        
+        isSitting = false;
+        isCanHitting = true;
     }
 
 
@@ -60,11 +60,12 @@ public class Player : MonoBehaviour, IControllAble
 
     private IEnumerator Jump()
     {
-        if (character.isGrounded)
+        if (character.isGrounded && !isSitting)
         {
             direction = Vector3.down;
             direction = Vector3.up * jumpForce;
             isJumping = true;
+            animator.SetTrigger("Jump");
         }
         
         yield return new WaitForSeconds(0.7f);
@@ -73,18 +74,18 @@ public class Player : MonoBehaviour, IControllAble
 
     private IEnumerator Sliding()
     {
-        if (!isSitting)
+        if (!isSitting && !isJumping)
         {
-            character.height = 7.5f;
+            character.height = 5.65f;
             isSitting = true;
+            animator.SetTrigger("Slide");
         }
 
+        isSitting = false;
         yield return new WaitForSeconds(0.5f);
         
         character.height = 9.11f;
-        isSitting = false;
-        
-        
+       
     }
 
     

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AnimatedSprite : MonoBehaviour
 {
+    /*
 
     [Header("Preference")]
     [SerializeField] private Sprite[] jumpSprites;
@@ -34,10 +35,11 @@ public class AnimatedSprite : MonoBehaviour
     private IEnumerator Animate(Sprite[] jumpSprites, Sprite[] sitDown, Sprite[] hits)
     {
        
-        for (float i = 0; i < 5; i += Time.deltaTime  )
+        for (float i = 0; i < 5; i += Time.deltaTime)
         {
        
             frame++;
+            /*
             if (Player.isJumping)
             {
                 if (frame >= jumpSprites.Length)
@@ -48,10 +50,10 @@ public class AnimatedSprite : MonoBehaviour
                 if (frame >= 0 && frame < jumpSprites.Length)
                 {
                     spriteRenderer.sprite = jumpSprites[frame];
-                  
                 }
              
             }
+            
             if (Player.isSitting)
             {
                 if (frame >= sitDown.Length)
@@ -78,17 +80,20 @@ public class AnimatedSprite : MonoBehaviour
                 }
             }
             */
+            /*
             else if (!Player.isJumping)
             {
                 spriteRenderer.sprite = runSprites;
             }
             
 
+
             yield return new WaitForSeconds( 1.1f /GameManager.Instance.gameSpeed);
-      
+            
             
         }
 
     }
+        */
 
 }

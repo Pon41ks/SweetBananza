@@ -21,6 +21,10 @@ public class BonusGame : MonoBehaviour
         animate = FindAnyObjectByType<Animate>();
 
         content.SetActive(true);
+        foreach (var chest in chests)
+        {
+            chest.gameObject.SetActive(true);
+        }
 
     }
 
@@ -53,7 +57,6 @@ public class BonusGame : MonoBehaviour
         openChest2.SetActive(true);
         yield return new WaitForSecondsRealtime(2);
         openChest2.SetActive(false);
-
         bonusPanel.SetActive(false);
         animate.startPause = true;
         if (Player.healthPoints <= 4)
