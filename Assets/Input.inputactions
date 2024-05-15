@@ -1,0 +1,45 @@
+{
+    "name": "Input",
+    "maps": [
+        {
+            "name": "BackButton",
+            "id": "42822657-bb41-4c00-9eb8-be91259792f7",
+            "actions": [
+                {
+                    "name": "pause",
+                    "type": "Button",
+                    "id": "1b7187e3-696e-46a9-a6e6-d57da8e86b57",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "cb2cc74a-46a3-4e06-ab15-575f7e5d3326",
+                    "path": "<Sensor>/{Back}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2e636fc8-cd06-455d-a916-b4977985df66",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

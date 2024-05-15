@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public interface IDamageable
 {
-
+   
     public bool TakeHit();
  
 }

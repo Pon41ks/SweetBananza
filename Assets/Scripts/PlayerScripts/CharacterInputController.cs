@@ -13,6 +13,8 @@ public class CharacterInputController : MonoBehaviour
 
     private void Update()
     {
-        SwipeDetection.instance.SwipePerformed += context => controllAble.Control();
+        
+            SwipeDetection.instance.SwipePerformed += context => controllAble.Control();
+        
     }
 }

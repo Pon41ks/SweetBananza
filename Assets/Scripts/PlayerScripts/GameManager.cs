@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Facebook.Unity;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,25 +17,32 @@ public class GameManager : MonoBehaviour
     private float score;
     private bool canOpenBonus = true;
     private int healthPoints = 4;
+    private bool isGameStart;
 
 
     [Header("Preference")]
     [SerializeField] private TextMeshProUGUI scoreText;
-    [SerializeField] private TextMeshProUGUI highScoreText;
-    [SerializeField] private TextMeshProUGUI gameOverText;
+    [SerializeField] private TextMeshProUGUI newRecordText;
+    [SerializeField] private TextMeshProUGUI heartCountText;
+    [SerializeField] private TextMeshProUGUI grapeCountText;
+    [SerializeField] private TextMeshProUGUI gameOverScoreText;
+    [SerializeField] private TextMeshProUGUI gameOverGrapeCountText;
     [SerializeField] private GameObject bonus;
     [SerializeField] private GameObject playButton;
-    
+    [SerializeField] private GameObject upPanel;
+    [SerializeField] private GameObject gameOverPanel;
 
-    public Button retryButton;
+
+
     private Player player;
     private Spawner spawner;
-    private HealthView health;
+
+
 
     private void Awake()
     {
-        Time.timeScale = 0;
-        gameSpeed = initialGameSpeed;
+
+        gameSpeed = 5f;
         SaveData.Current = (SaveData)SerializationManager.Load();
         if (Instance == null)
         {
@@ -44,10 +52,9 @@ public class GameManager : MonoBehaviour
         {
             DestroyImmediate(gameObject);
         }
-        
-        retryButton.gameObject.SetActive(false);
-        gameOverText.gameObject.SetActive(false);
-        UpdateHighScore();
+        upPanel.SetActive(false);
+
+        EventManager.OnAnimationEnd.AddListener(ShowGameOverPanel);
     }
 
     private void OnDestroy()
@@ -60,57 +67,72 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        
+
         SerializationManager.Save(SaveData.Current);
         player = FindObjectOfType<Player>();
         spawner = FindObjectOfType<Spawner>();
-        health = FindAnyObjectByType<HealthView>();
-        //NewGame();
+        Debug.Log(SaveData.Current.highScore);
+        player.gameObject.SetActive(false);
+        spawner.gameObject.SetActive(false);
+
     }
 
 
     public void NewGame()
     {
         score = 0;
-        Time.timeScale = 1f;
+        isGameStart = true;
         Player.healthPoints = healthPoints;
         Obstacles[] obstacles = FindObjectsOfType<Obstacles>();
         foreach (var obstacle in obstacles)
         {
             Destroy(obstacle.gameObject);
         }
-
+        EventManager.SendClearFruits();
         gameSpeed = initialGameSpeed;
         Player.isCanHitting = true;
+        Player.isSitting = false;
         enabled = true;
 
+        upPanel.SetActive(true);
         player.gameObject.SetActive(true);
         spawner.gameObject.SetActive(true);
-        health.gameObject.SetActive(true);
-        gameOverText.gameObject.SetActive(false);
-        retryButton.gameObject.SetActive(false);
-        playButton.SetActive(false);
 
-        UpdateHighScore();
+
+        playButton.SetActive(false);
+        FaceBookSdk.LogAppInstall();
+        gameOverPanel.SetActive(false);
+
     }
 
     public void GameOver()
     {
-        Time.timeScale = 0f;
+
+        isGameStart = false;
         UpdateHighScore();
         SerializationManager.Save(SaveData.Current);
-
         gameSpeed = 0f;
-
         enabled = false;
-
+        upPanel.SetActive(false);
         player.gameObject.SetActive(false);
         spawner.gameObject.SetActive(false);
-        health.gameObject.SetActive(false);
-        gameOverText.gameObject.SetActive(true);
-        retryButton.gameObject.SetActive(true);
-        
+
+
+        gameOverGrapeCountText.text = EventManager.collectedFruits.ToString();
+        gameOverScoreText.text = Mathf.RoundToInt(score).ToString("D4");
+        if (!EventManager.isNewRecord)
+        {
+            gameOverPanel.SetActive(true);
+        }
+
+
     }
+
+    private void ShowGameOverPanel()
+    {
+        gameOverPanel.SetActive(true);
+    }
+
 
     public void TakingHit()
     {
@@ -118,34 +140,42 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-       gameSpeed += gameSpeedEncrease * Time.deltaTime;
-       score += gameSpeed / 2f * Time.deltaTime;
-       scoreText.text = Mathf.RoundToInt(score).ToString("D5");
+
+        if (isGameStart)
+        {
+            gameSpeed += gameSpeedEncrease * Time.deltaTime;
+            score += gameSpeed / 2f * Time.deltaTime;
+        }
+
+        grapeCountText.text = EventManager.collectedFruits.ToString();
+        scoreText.text = Mathf.RoundToInt(score).ToString("D4");
+        heartCountText.text = "4/" + Player.healthPoints.ToString();
         if (score >= 100)
+        {
+            if (canOpenBonus)
             {
-                if (canOpenBonus)
-                {
-                    StartCoroutine(StartBonusGame());
-                }
+                StartCoroutine(StartBonusGame());
             }
+        }
     }
 
     private void UpdateHighScore()
     {
-        if(score > SaveData.Current.highScore)
+        if (score > SaveData.Current.highScore)
         {
             SaveData.Current.highScore = score;
+            EventManager.SendRecordChanged();
         }
-        highScoreText.text = Mathf.RoundToInt(SaveData.Current.highScore).ToString("D5");
+        newRecordText.text = Mathf.RoundToInt(SaveData.Current.highScore).ToString("D5");
     }
 
     private IEnumerator StartBonusGame()
     {
-            canOpenBonus = false;
-            bonus.SetActive(true);
-            Time.timeScale = 0f;
-            yield return new WaitForSeconds(60);
-            canOpenBonus = true;
+        canOpenBonus = false;
+        bonus.SetActive(true);
+        Time.timeScale = 0f;
+        yield return new WaitForSeconds(60);
+        canOpenBonus = true;
     }
 
 }

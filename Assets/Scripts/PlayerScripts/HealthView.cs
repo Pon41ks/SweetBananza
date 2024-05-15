@@ -7,11 +7,12 @@ public class HealthView : MonoBehaviour
 {
     [SerializeField] private Image[] healthPoints;
     [SerializeField] private int numOfHearts;
+   
 
 
     private void Update()
     {
-
+      
         numOfHearts = Player.healthPoints;
         for (int i = 0; i < healthPoints.Length; i++)
         {

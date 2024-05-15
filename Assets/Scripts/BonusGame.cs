@@ -11,12 +11,12 @@ public class BonusGame : MonoBehaviour
     [SerializeField] private GameObject bonusPanel;
 
     private Animate animate;
-
+    public bool isCorrectChest;
 
     private void OnEnable()
     {
         int index = Random.Range(0, 4);
-
+        isCorrectChest = false;
         chests[index].hasTreasure = true;
         animate = FindAnyObjectByType<Animate>();
 
@@ -32,14 +32,16 @@ public class BonusGame : MonoBehaviour
     {
         if (Chest.isChoose)
         {
-
-            StartCoroutine(WinAnimation());
             Chest.isChoose = false;
+            StartCoroutine(WinAnimation());
+            
             
         }
     }
     private IEnumerator WinAnimation()
     {
+        isCorrectChest = true;
+
         foreach (var chest in chests)
         {
 
@@ -57,6 +59,7 @@ public class BonusGame : MonoBehaviour
         openChest2.SetActive(true);
         yield return new WaitForSecondsRealtime(2);
         openChest2.SetActive(false);
+        openChest.SetActive(false);
         bonusPanel.SetActive(false);
         animate.startPause = true;
         if (Player.healthPoints <= 4)

@@ -8,6 +8,9 @@ Library: /Users/ivantrusilin/Documents/GitHub/SweetBananza/Temp/BurstOutput/temp
 --float-precision=Standard
 --target-framework=NetFramework
 --assembly-defines=Assembly-CSharp;
+--assembly-defines=Facebook.Unity.Android;
+--assembly-defines=Facebook.Unity;
+--assembly-defines=Facebook.Unity.Settings;
 --assembly-defines=Mono.Security;
 --assembly-defines=mscorlib;
 --assembly-defines=System.Configuration;

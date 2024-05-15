@@ -12,8 +12,8 @@ public class SwipeDetection : MonoBehaviour
     public static SwipeDetection instance;
     public delegate void Swipe(Vector2 direction);
     public event Swipe SwipePerformed;
-    
 
+    public static Vector2 direction;
     private Vector2 initialPos;
     private Vector2 currentPos => position.ReadValue<Vector2>();
 
@@ -28,23 +28,24 @@ public class SwipeDetection : MonoBehaviour
 
     private void DetectSwipe()
     {
+
         Vector2 delta = currentPos - initialPos;
 
-        Player.direction = Vector2.zero;
-
+        direction = Vector2.zero;
 
 
         if (Mathf.Abs(delta.y) > swipeResitance)
         {
 
-            Player.direction.y = Mathf.Clamp(delta.y, -1, 1);
+            direction.y = Mathf.Clamp(delta.y, -1, 1);
         }
-        if(Player.direction != Vector3.zero && SwipePerformed != null)
+        if (direction != Vector2.zero && SwipePerformed != null)
         {
-            SwipePerformed(Player.direction);
+            SwipePerformed(direction);
         }
+
     }
-   
+
 }
 
 

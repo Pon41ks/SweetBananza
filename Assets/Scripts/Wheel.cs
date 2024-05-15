@@ -17,12 +17,14 @@ public class Wheel : MonoBehaviour
     [SerializeField] private GameObject wheelPanel;
     [SerializeField] private GameObject spinButton;
     [SerializeField] private Animate animate;
-    
+
+
     private void OnEnable()
     {
         spinButton.SetActive(true);
         coroutineAllowed = true;
         isSpinnigFinish = false;
+        transform.rotation = Quaternion.identity;
     }
 
     public void Spin()
@@ -44,7 +46,7 @@ public class Wheel : MonoBehaviour
 
     private IEnumerator Spining()
     {
-   
+        
         coroutineAllowed = false;
         randomValue = Random.Range(20, 30);
         timeInterval = 0.1f;
@@ -72,7 +74,7 @@ public class Wheel : MonoBehaviour
         }
 
         finalAngle = Mathf.RoundToInt(transform.eulerAngles.z);
-
+        Debug.Log(finalAngle);
         switch (finalAngle)
         {
             case 0:
@@ -82,7 +84,21 @@ public class Wheel : MonoBehaviour
                 }
                 Debug.Log("you win");
                 break;
-            case 180:
+            case 270:
+                if (Player.healthPoints < 4)
+                {
+                    Player.healthPoints += 1;
+                }
+                Debug.Log("you win");
+                break;
+            case 225:
+                if (Player.healthPoints < 4)
+                {
+                    Player.healthPoints += 1;
+                }
+                Debug.Log("you win");
+                break;
+            case 135:
                 if (Player.healthPoints < 4)
                 {
                     Player.healthPoints += 1;
@@ -96,12 +112,8 @@ public class Wheel : MonoBehaviour
                 }
                 Debug.Log("you win");
                 break;
-
-
-
-
         }
-        
+
         
         isSpinnigFinish = true;
         coroutineAllowed = true;

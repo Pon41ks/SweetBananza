@@ -7,6 +7,8 @@ public class Chest : MonoBehaviour
 
     [SerializeField] private GameObject bonusPanel;
 
+    private BonusGame bg;
+
     public static bool isChoose;
 
     public  bool hasTreasure;
@@ -15,6 +17,7 @@ public class Chest : MonoBehaviour
     private void OnEnable()
     {
         animate = FindAnyObjectByType<Animate>();
+        bg = FindAnyObjectByType<BonusGame>();
     }
 
     public void OpenСhest()
@@ -23,12 +26,13 @@ public class Chest : MonoBehaviour
         if (hasTreasure)
         {
             isChoose = true;
-           
+
             
             Debug.Log("success");
         }
-        else
+        else if(!hasTreasure && !bg.isCorrectChest)
         {
+
             animate.startPause = true;
             bonusPanel.SetActive(false);
             
