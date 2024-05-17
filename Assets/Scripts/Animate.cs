@@ -15,18 +15,18 @@ public class Animate : MonoBehaviour
     private void Awake()
     {
         pausePanel = GetComponent<Image>();
+        EventManager.OnContinueGame.AddListener(Continue);
     }
 
-    private void Update()
-    {
-        if (startPause)
-        {
-            pausePanel.enabled = true;
-            StartCoroutine(BeforeUnpause());
-            startPause = false;
+    
 
-        }
-        
+    private void Continue()
+    {
+        EventManager.SendCanControl();
+        Time.timeScale = 0f;
+        pausePanel.enabled = true;
+        StartCoroutine(BeforeUnpause());
+        startPause = false;
     }
     
 
@@ -43,7 +43,9 @@ public class Animate : MonoBehaviour
         yield return new WaitForSecondsRealtime(1);
         one.SetActive(false);
         pausePanel.enabled = false;
+        EventManager.SendGameUnPaused();
         Time.timeScale = 1f;
+        EventManager.SendPlayerUnFrozen();
         yield return new WaitForEndOfFrame();
     }
 }

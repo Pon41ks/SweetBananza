@@ -10,6 +10,7 @@ public class Chest : MonoBehaviour
     private BonusGame bg;
 
     public static bool isChoose;
+    public static bool incorrect;
 
     public  bool hasTreasure;
     private Animate animate;
@@ -27,16 +28,14 @@ public class Chest : MonoBehaviour
         {
             isChoose = true;
 
-            
             Debug.Log("success");
         }
-        else if(!hasTreasure && !bg.isCorrectChest)
+        else
         {
+            incorrect = true;
 
-            animate.startPause = true;
-            bonusPanel.SetActive(false);
-            
         }
+       
 
     }
 

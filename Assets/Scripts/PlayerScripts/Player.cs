@@ -12,10 +12,14 @@ public class Player : MonoBehaviour, IControllAble
     private CharacterController character;
     public static Vector3 direction;
     private SpriteRenderer spriteRenderer;
+    private AnimatorStateInfo currentAnimatorState;
+    private int currentAnimatorHash;
+    private float currentAnimatorTime;
     [SerializeField] private Sprite idle;
     [SerializeField] private Sprite takeDamage;
     [SerializeField] private Color colorRed;
     [SerializeField] private Color colorWhite;
+    [SerializeField] private AudioSource hit;
 
 
     [Header("Properties")]
@@ -34,9 +38,8 @@ public class Player : MonoBehaviour, IControllAble
         character = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-       
-
-
+        EventManager.OnPlayerUnFrozen.AddListener(PlayAnimation);
+        hit.volume = 1f;
     }
 
     private void OnEnable()
@@ -51,12 +54,9 @@ public class Player : MonoBehaviour, IControllAble
     }
     private void OffAnimation()
     {
-
         animator.Play("Idle");
         animator.Rebind();
         spriteRenderer.sprite = idle;
-        
-
 
     }
 
@@ -64,32 +64,38 @@ public class Player : MonoBehaviour, IControllAble
     private void Update()
     {
 
-        direction += gravity * Time.deltaTime * Vector3.down;
-        character.Move(direction * Time.deltaTime);
-        
-
+        if (!EventManager.isFrozen)
+        {
+            
+                direction += gravity * Time.deltaTime * Vector3.down;
+                character.Move(direction * Time.deltaTime);
+            
+        }
+        if (EventManager.isFrozen)
+        {
+            animator.speed = 0;
+        }
     }
 
     public void Control()
     {
-        if (!EventManager.isSettingsOpen)
+        if (!EventManager.isCantControl)
         {
             if (SwipeDetection.direction == Vector2.up && !isJumping && !isSitting)
             {
 
                 StartCoroutine(Jump());
 
+
             }
             else if (SwipeDetection.direction == Vector2.down && !isJumping && !isSitting)
             {
-
-
-                StartCoroutine(Sliding());
+                SLide();
 
             }
 
         }
-        
+       
 
     }
 
@@ -98,6 +104,7 @@ public class Player : MonoBehaviour, IControllAble
 
         if (character.isGrounded)
         {
+            
             direction = Vector3.down;
             direction = Vector3.up * jumpForce;
             isJumping = true;
@@ -108,26 +115,36 @@ public class Player : MonoBehaviour, IControllAble
         isJumping = false;
 
     }
+    private void PlayAnimation()
+    {
+        animator.speed = 1;
+    }
 
     private IEnumerator Sliding()
     {
-        if (!isJumping)
-        {
-            isSitting = true;
-            character.height = 5.65f;
-            animator.SetTrigger("Slide");
-        }
 
-        yield return new WaitForSeconds(0.5f);
-        character.height = 9.11f;
+        yield return new WaitForSeconds(0.3f);
+
         isSitting = false;
 
+    }
+
+    private void SLide()
+    {
+        isSitting = true;
+        character.height = 5.65f;
+        animator.SetTrigger("Slide");
+    }
+
+    public void OnAnimationFinished()
+    {
+        StartCoroutine(Sliding());
+        character.height = 9.11f;
     }
 
 
     private IEnumerator CanHitting()
     {
-        
         isCanHitting = false;
         yield return new WaitForSeconds(1f);
         isCanHitting = true;
@@ -138,14 +155,33 @@ public class Player : MonoBehaviour, IControllAble
         if (!isSitting && !isJumping)
         {
             animator.SetTrigger("Hit");
+            character.height = 5.68f;
         }
         spriteRenderer.color = colorRed;
-        character.height = 5.68f;
+
         yield return new WaitForSeconds(0.4f);
         spriteRenderer.color = colorWhite;
         character.height = 9.11f;
     }
 
+    private IEnumerator FreezeAnimationAndMovement()
+    {
+
+
+        
+        Vector3 originalVelocity = direction;
+        direction = Vector3.zero;
+
+        while (EventManager.isFrozen)
+        {
+            yield return null;
+        }
+
+        // Возобновляем анимацию с сохраненного состояния и времени
+        animator.Play(currentAnimatorHash, 0, currentAnimatorTime);
+        animator.speed = 1;
+        direction = originalVelocity;
+    }
 
 
     public void OnTriggerEnter(Collider other)
@@ -154,13 +190,13 @@ public class Player : MonoBehaviour, IControllAble
         {
             if (isCanHitting)
             {
-
+                hit.Play();
                 var target = GetComponent<IDamageable>();
                 target?.TakeHit();
                 healthPoints -= 1;
                 StartCoroutine(CanHitting());
                 GameManager.Instance.TakingHit();
-                
+
                 if (healthPoints <= 0)
                 {
                     OffAnimation();
@@ -170,16 +206,21 @@ public class Player : MonoBehaviour, IControllAble
                 {
                     StartCoroutine(TakingHit());
                 }
-                
+
             }
 
         }
         if (other.CompareTag("Fruit"))
         {
+            EventManager.SendPlayerFrozen();
+            //StartCoroutine(FreezeAnimationAndMovement());
+            
+            
+            //OffAnimation();
             EventManager.SendFruitIsColected();
             Destroy(other.gameObject);
             Wheelpanel.SetActive(true);
-            Time.timeScale = 0f;
+
         }
     }
 }

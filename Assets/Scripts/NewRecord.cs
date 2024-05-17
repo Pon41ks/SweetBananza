@@ -20,7 +20,7 @@ public class NewRecord : MonoBehaviour
     private IEnumerator ShowAnimation()
     {
         animator.SetTrigger("NewRecord");
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3);
         animator.SetTrigger("Close");
         yield return new WaitForSeconds(1);
         EventManager.SendAnimationEnded();

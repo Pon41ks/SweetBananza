@@ -5,6 +5,8 @@ using TMPro;
 using UnityEngine.UI;
 using Facebook.Unity;
 
+
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
@@ -31,12 +33,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject playButton;
     [SerializeField] private GameObject upPanel;
     [SerializeField] private GameObject gameOverPanel;
-
+    [SerializeField] private GameObject hardwareButtonHandler;
+    [SerializeField] private GameObject logo;
 
 
     private Player player;
     private Spawner spawner;
-
+    
 
 
     private void Awake()
@@ -53,7 +56,7 @@ public class GameManager : MonoBehaviour
             DestroyImmediate(gameObject);
         }
         upPanel.SetActive(false);
-
+        
         EventManager.OnAnimationEnd.AddListener(ShowGameOverPanel);
     }
 
@@ -93,11 +96,11 @@ public class GameManager : MonoBehaviour
         Player.isCanHitting = true;
         Player.isSitting = false;
         enabled = true;
-
+        logo.SetActive(false);
         upPanel.SetActive(true);
         player.gameObject.SetActive(true);
         spawner.gameObject.SetActive(true);
-
+        hardwareButtonHandler.SetActive(true);
 
         playButton.SetActive(false);
         FaceBookSdk.LogAppInstall();
@@ -116,7 +119,7 @@ public class GameManager : MonoBehaviour
         upPanel.SetActive(false);
         player.gameObject.SetActive(false);
         spawner.gameObject.SetActive(false);
-
+        hardwareButtonHandler.SetActive(false);
 
         gameOverGrapeCountText.text = EventManager.collectedFruits.ToString();
         gameOverScoreText.text = Mathf.RoundToInt(score).ToString("D4");
@@ -127,6 +130,8 @@ public class GameManager : MonoBehaviour
 
 
     }
+
+
 
     private void ShowGameOverPanel()
     {
@@ -141,16 +146,17 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
 
-        if (isGameStart)
+        if (isGameStart && !EventManager.isPause)
         {
             gameSpeed += gameSpeedEncrease * Time.deltaTime;
             score += gameSpeed / 2f * Time.deltaTime;
+
         }
 
         grapeCountText.text = EventManager.collectedFruits.ToString();
         scoreText.text = Mathf.RoundToInt(score).ToString("D4");
-        heartCountText.text = "4/" + Player.healthPoints.ToString();
-        if (score >= 100)
+        heartCountText.text = Player.healthPoints.ToString() + "/4"; //"4/" + Player.healthPoints.ToString();
+        if (score >= 30)
         {
             if (canOpenBonus)
             {
@@ -173,8 +179,8 @@ public class GameManager : MonoBehaviour
     {
         canOpenBonus = false;
         bonus.SetActive(true);
-        Time.timeScale = 0f;
-        yield return new WaitForSeconds(60);
+       
+        yield return new WaitForSeconds(15);
         canOpenBonus = true;
     }
 

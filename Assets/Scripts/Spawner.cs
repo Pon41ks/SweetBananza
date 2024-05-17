@@ -17,20 +17,26 @@ public class Spawner : MonoBehaviour
     [SerializeField] float minSpawnRate = 1f;
     [SerializeField] float maxSpawnRate = 2f;
 
+
+
+
     private void OnEnable()
     {
-        Invoke(nameof(spawn), Random.Range(minSpawnRate, maxSpawnRate));
+        Invoke(nameof(Spawn), Random.Range(minSpawnRate, maxSpawnRate));
     }
 
     private void OnDisable()
     {
         CancelInvoke();
     }
-    private void spawn()
+    private void Spawn()
     {
+
+
         float spawnChance = Random.value;
         foreach (var obj in objects)
         {
+
             if (spawnChance < obj.spawnChance)
             {
                 GameObject obstacle = Instantiate(obj.prefab);
@@ -40,6 +46,8 @@ public class Spawner : MonoBehaviour
 
             spawnChance -= obj.spawnChance;
         }
-        Invoke(nameof(spawn), Random.Range(minSpawnRate, maxSpawnRate));
+        Invoke(nameof(Spawn), Random.Range(minSpawnRate, maxSpawnRate));
+
+
     }
 }

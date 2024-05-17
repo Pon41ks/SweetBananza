@@ -8,9 +8,10 @@ public class Obstacles : MonoBehaviour
 
     private void Update()
     {
+
         transform.position += Vector3.left *  GameManager.Instance.gameSpeed / 3f * Time.deltaTime;
 
-        if (transform.position.x < leftEdge)
+        if (transform.position.x < leftEdge || EventManager.isFrozen)
         {
             Destroy(gameObject);
         }

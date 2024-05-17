@@ -3,50 +3,64 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Settings : MonoBehaviour
+namespace UISwitcher
 {
-    [SerializeField] private GameObject settingsPanel;
-    [SerializeField] private Slider musicSlider;
-    [SerializeField] private Slider soundSlider;
-    [SerializeField] private AudioSource music;
-
-    private void Awake()
+    public class Settings : MonoBehaviour
     {
-        music.volume = musicSlider.value;
-    }
-    private void Update()
-    {
-        music.volume = musicSlider.value;
-    }
-    public void OpenSettings()
-    {
-        Time.timeScale = 0f;
-        settingsPanel.SetActive(true);
-        EventManager.SendSettingsOpened();
-    }
-    public void CloseSettings()
-    {
-        Time.timeScale = 1f;
-        EventManager.SendSettingsClosed();
-        settingsPanel.SetActive(false);
-    }
-
-    public void AddMusicVolume()
-    {
-        musicSlider.value += 0.2f;
-    }
-    public void RemoveMusicVolume()
-    {
-        musicSlider.value -= 0.2f;
-    }
-    public void AddSoundVolume()
-    {
-        soundSlider.value += 0.2f;
-    }
-    public void RemoveSoundVolume()
-    {
-        soundSlider.value -= 0.2f;
-    }
+        [SerializeField] private GameObject settingsPanel;
+        [SerializeField] private UISwitcher switcher1;
+        [SerializeField] private UISwitcher switcher2;
+        [SerializeField] private AudioSource audioSource1;
+        [SerializeField] private AudioSource audioSource2;
 
 
+
+        private void Awake()
+        {
+            // music.volume = musicSlider.value;
+            switcher1.onValueChanged.AddListener(OnValueChanged1);
+            switcher2.onValueChanged.AddListener(OnValueChanged2);
+
+        }
+        private void Update()
+        {
+
+            // music.volume = musicSlider.value;
+        }
+
+        private void OnValueChanged1(bool isOn)
+        {
+            if (switcher1.isOn)
+            {
+                audioSource1.volume = 1;
+            }
+            else
+                audioSource1.volume = 0;
+        }
+        private void OnValueChanged2(bool isOn)
+        {
+            if (switcher2.isOn)
+            {
+                audioSource2.UnPause();
+            }
+            else audioSource2.Pause();
+            Debug.Log("asdasdsa");
+        }
+
+        public void OpenSettings()
+        {
+            Time.timeScale = 0f;
+            settingsPanel.SetActive(true);
+            EventManager.SendCantControl();
+        }
+        public void CloseSettings()
+        {
+            Time.timeScale = 1f;
+            EventManager.SendCanControl();
+            settingsPanel.SetActive(false);
+        }
+
+
+    }
 }
+

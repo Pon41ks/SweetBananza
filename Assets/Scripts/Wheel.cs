@@ -1,125 +1,150 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
 using TMPro;
 
-
-public class Wheel : MonoBehaviour
+public class WheelOfFortune : MonoBehaviour
 {
-
-    private float timeInterval;
-    private int randomValue;
-    private bool coroutineAllowed;
-    private int finalAngle;
-    private bool spinStart;
-    public bool isSpinnigFinish;
-
-    [SerializeField] private GameObject wheelPanel;
-    [SerializeField] private GameObject spinButton;
+    [Header("Preference")]
     [SerializeField] private Animate animate;
+    
+    [SerializeField] private Image wheel;
+    [SerializeField] private AnimationCurve spinCurve;
+    [SerializeField] private GameObject spawner;
+    [SerializeField] private GameObject wheelPanel;
+    [SerializeField] private GameObject winOrLosePanel;
+    [SerializeField] private GameObject continuePanel;
+    [SerializeField] private GameObject winOrLoseTextObj;
+    [SerializeField] private Animator animator;
+    [SerializeField] private TextMeshProUGUI winOrLoseText;
 
 
+    [Header("Properties")]
+    [SerializeField] private float spinDuration = 4f;
+    [SerializeField] private string[] prizes; // Массив призов
+    [SerializeField] private int[] winningSectors;
+    private float startAngle;
+    private bool isSpinning = false; // Флаг состояния вращения
+    private int healthpoints;
+
+    void Start()
+    {
+        startAngle = wheel.transform.eulerAngles.z;
+        healthpoints = Player.healthPoints;
+
+    }
     private void OnEnable()
     {
-        spinButton.SetActive(true);
-        coroutineAllowed = true;
-        isSpinnigFinish = false;
+        EventManager.SendGamePaused();
+        spawner.SetActive(false);
+        animator.SetTrigger("OpenWheel");
+    }
+
+    public void StartSpin()
+    {
+        if (isSpinning)
+        {
+            Debug.Log("Spin already in progress");
+            return;
+        }
+
+        isSpinning = true;
+        Debug.Log("StartSpin called");
+        StartCoroutine(Spin());
+    }
+
+    private IEnumerator Spin()
+    {
         transform.rotation = Quaternion.identity;
-    }
-
-    public void Spin()
-    {
-        spinStart = true;
-        spinButton.SetActive(false);
-    }
-
-    private void Update()
-    {
-        
-        if (spinStart)
+        float elapsedTime = 0f;
+        float endAngle = Random.Range(0f, 360f) + 360f * 5f;
+        Debug.Log("Spin started");
+       
+        while (elapsedTime < spinDuration)
         {
-            StartCoroutine(Spining());
+            elapsedTime += Time.deltaTime;
+            float currentAngle = Mathf.Lerp(startAngle, endAngle, spinCurve.Evaluate(elapsedTime / spinDuration));
+            wheel.transform.eulerAngles = new Vector3(0, 0, currentAngle);
+            yield return null;
         }
 
+        startAngle = wheel.transform.eulerAngles.z;
+        Debug.Log("Spin finished");
+
+        yield return new WaitForSeconds(1);
+        DeterminePrize(startAngle);
+        
+        isSpinning = false;
+        yield return new WaitForSeconds(3);
+        continuePanel.SetActive(true);
+        winOrLoseTextObj.SetActive(false);
+        
     }
 
-
-    private IEnumerator Spining()
+    public void Continue()
     {
-        
-        coroutineAllowed = false;
-        randomValue = Random.Range(20, 30);
-        timeInterval = 0.1f;
-        
-
-        for (int i = 0; i < randomValue; i++)
+        if (continuePanel.activeInHierarchy)
         {
-            transform.Rotate(0, 0, 22.5f);
-            if (i > Mathf.RoundToInt(randomValue * 0.5f))
+            EventManager.SendContinueGame();
+            wheelPanel.SetActive(false);
+            winOrLosePanel.SetActive(false);
+            transform.rotation = Quaternion.identity;
+            EventManager.SendPlayerUnFrozen();
+            EventManager.SendGameUnPaused();
+            spawner.SetActive(true);
+        }
+    }
+
+    private void DeterminePrize(float finalAngle)
+    {
+        winOrLosePanel.SetActive(true);
+        finalAngle = finalAngle % 360;
+
+
+        int numberOfSectors = 5;
+
+
+        float sectorAngle = 360f / numberOfSectors;
+
+
+        int winningSector = Mathf.FloorToInt(finalAngle / sectorAngle);
+
+
+        bool isWinningSector = false;
+
+        for (int i = 0; i < winningSectors.Length; i++)
+        {
+            if (winningSectors[i] == winningSector)
             {
-                timeInterval = 0.2f;
+                isWinningSector = true;
+                break;
             }
-            if (i > Mathf.RoundToInt(randomValue * 0.85f))
-            {
-                timeInterval = 0.4f;
-            }
-            spinStart = false;
-    
-            yield return new WaitForSecondsRealtime(timeInterval);
-         
-        }
-        if (Mathf.RoundToInt(transform.eulerAngles.z) % 45 != 0 )
-        {
-            transform.Rotate(0, 0, 22.5f);
-        }
-
-        finalAngle = Mathf.RoundToInt(transform.eulerAngles.z);
-        Debug.Log(finalAngle);
-        switch (finalAngle)
-        {
-            case 0:
-                if (Player.healthPoints < 4)
-                {
-                    Player.healthPoints += 1;
-                }
-                Debug.Log("you win");
-                break;
-            case 270:
-                if (Player.healthPoints < 4)
-                {
-                    Player.healthPoints += 1;
-                }
-                Debug.Log("you win");
-                break;
-            case 225:
-                if (Player.healthPoints < 4)
-                {
-                    Player.healthPoints += 1;
-                }
-                Debug.Log("you win");
-                break;
-            case 135:
-                if (Player.healthPoints < 4)
-                {
-                    Player.healthPoints += 1;
-                }
-                Debug.Log("you win");
-                break;
-            case 90:
-                if (Player.healthPoints < 4)
-                {
-                    Player.healthPoints += 1;
-                }
-                Debug.Log("you win");
-                break;
         }
 
         
-        isSpinnigFinish = true;
-        coroutineAllowed = true;
-        animate.startPause = true;
-        wheelPanel.SetActive(false);
+        // Обновляем жизни игрока при необходимости
+        if (isWinningSector && healthpoints < 4)
+        {
+            winOrLoseText.text = "Вы выйграли!";
+            healthpoints++;
+            Debug.Log("Вы выиграли и получили дополнительную жизнь! Жизни: " + healthpoints);
+        }
+        else if (isWinningSector)
+        {
+            winOrLoseText.text = "Вы выйграли, но у вас уже максимальное кол-во жизней";
+            Debug.Log("Вы выиграли, но у вас уже максимальное количество жизней. Жизни: " + healthpoints);
+        }
+        else
+        {
+            winOrLoseText.text = "Вы проиграли(";
+            Debug.Log("Попробуйте еще раз! Жизни: " + healthpoints);
+        }
         
+        
+        
+        
+        
+
     }
 
 }
