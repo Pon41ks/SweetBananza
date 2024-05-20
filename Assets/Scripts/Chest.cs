@@ -10,7 +10,7 @@ public class Chest : MonoBehaviour
     private BonusGame bg;
 
     public static bool isChoose;
-    public static bool incorrect;
+    public static bool inCorrect;
 
     public  bool hasTreasure;
     private Animate animate;
@@ -32,7 +32,7 @@ public class Chest : MonoBehaviour
         }
         else
         {
-            incorrect = true;
+            inCorrect = true;
 
         }
        

@@ -30,17 +30,20 @@ public static class EventManager
         OnContinueGame.Invoke();
     }
 
-    public static void SendPlayerFrozen()
+    public static void SetPlayerFrozen(bool frozen)
     {
-        isFrozen = true;
-        OnPlayerIsFrozen.Invoke();
+        isFrozen = frozen;
+        if (isFrozen)
+        {
+            OnPlayerIsFrozen.Invoke();
+        }
+        else
+        {
+            OnPlayerUnFrozen.Invoke();
+        }
     }
 
-    public static void SendPlayerUnFrozen()
-    {
-        isFrozen = false;
-        OnPlayerUnFrozen.Invoke();
-    }
+
     public static void SendGamePaused()
     {
         isPause = true;

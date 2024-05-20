@@ -13,8 +13,6 @@ public class Player : MonoBehaviour, IControllAble
     public static Vector3 direction;
     private SpriteRenderer spriteRenderer;
     private AnimatorStateInfo currentAnimatorState;
-    private int currentAnimatorHash;
-    private float currentAnimatorTime;
     [SerializeField] private Sprite idle;
     [SerializeField] private Sprite takeDamage;
     [SerializeField] private Color colorRed;
@@ -33,6 +31,7 @@ public class Player : MonoBehaviour, IControllAble
 
 
 
+
     private void Awake()
     {
         character = GetComponent<CharacterController>();
@@ -44,11 +43,11 @@ public class Player : MonoBehaviour, IControllAble
 
     private void OnEnable()
     {
-        isJumping = false;
-        isSitting = false;
+        
         isCanHitting = true;
-
+        OffAnimation();
         character.height = 9.11f;
+        
 
 
     }
@@ -79,7 +78,7 @@ public class Player : MonoBehaviour, IControllAble
 
     public void Control()
     {
-        if (!EventManager.isCantControl)
+        if (!EventManager.isCantControl && isCanHitting)
         {
             if (SwipeDetection.direction == Vector2.up && !isJumping && !isSitting)
             {
@@ -164,24 +163,7 @@ public class Player : MonoBehaviour, IControllAble
         character.height = 9.11f;
     }
 
-    private IEnumerator FreezeAnimationAndMovement()
-    {
-
-
-        
-        Vector3 originalVelocity = direction;
-        direction = Vector3.zero;
-
-        while (EventManager.isFrozen)
-        {
-            yield return null;
-        }
-
-        // Возобновляем анимацию с сохраненного состояния и времени
-        animator.Play(currentAnimatorHash, 0, currentAnimatorTime);
-        animator.speed = 1;
-        direction = originalVelocity;
-    }
+  
 
 
     public void OnTriggerEnter(Collider other)
@@ -212,9 +194,7 @@ public class Player : MonoBehaviour, IControllAble
         }
         if (other.CompareTag("Fruit"))
         {
-            EventManager.SendPlayerFrozen();
-            //StartCoroutine(FreezeAnimationAndMovement());
-            
+            EventManager.SetPlayerFrozen(true);
             
             //OffAnimation();
             EventManager.SendFruitIsColected();

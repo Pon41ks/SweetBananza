@@ -39,22 +39,27 @@ namespace UISwitcher
 
         private void BackButtonDetected()
         {
-            if (isSettingsOpen)
+            if (!EventManager.isFrozen)
             {
-                Time.timeScale = 1f;
-                settingsPanel.SetActive(false);
-                isSettingsOpen = false; // Устанавливаем флаг на false, так как панель закрыта
-                Debug.Log("Settings panel closed");
+                if (isSettingsOpen)
+                {
+                    Time.timeScale = 1f;
+                    settingsPanel.SetActive(false);
+                    isSettingsOpen = false; // Устанавливаем флаг на false, так как панель закрыта
+                    Debug.Log("Settings panel closed");
+                }
+                else
+                {
+                    isSettingsOpen = true; // Устанавливаем флаг на true, так как панель открывается
+                    Debug.Log("Settings panel opened");
+                    settingsPanel.SetActive(true);
+                    Time.timeScale = 0f;
+                }
+                BackButtonPressed?.Invoke();
             }
-            else
-            {
-                isSettingsOpen = true; // Устанавливаем флаг на true, так как панель открывается
-                Debug.Log("Settings panel opened");
-                settingsPanel.SetActive(true);
-                Time.timeScale = 0f;
-            }
-            BackButtonPressed?.Invoke();
+            
         }
+
 
 
 

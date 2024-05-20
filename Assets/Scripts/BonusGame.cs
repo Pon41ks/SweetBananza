@@ -10,25 +10,29 @@ public class BonusGame : MonoBehaviour
     [SerializeField] private GameObject content;
     [SerializeField] private GameObject bonusPanel;
     [SerializeField] private GameObject bonusText;
+    [SerializeField] private GameObject continuePanel;
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject spawner;
     [SerializeField] private GameObject effect;
     [SerializeField] private Image[] chestss;
+    [SerializeField] private Image bonusTextImg;
 
 
     public bool isCorrectChest;
 
     private void OnEnable()
     {
+        continuePanel.SetActive(false);
         foreach (var chest in chestss)
         {
             chest.enabled = true;
         }
+        bonusTextImg.enabled = true;
         bonusText.SetActive(true);
         content.SetActive(true);
         EventManager.SendGamePaused();
         spawner.SetActive(false);
-        EventManager.SendPlayerFrozen();
+        EventManager.SetPlayerFrozen(true);
         animator.SetTrigger("ChestOpened");
         EventManager.SendCantControl();
         int index = Random.Range(0, 4);
@@ -57,6 +61,7 @@ public class BonusGame : MonoBehaviour
                 if (chest.hasTreasure)
                 {
                     animator.SetTrigger("1");
+
                 }
 
 
@@ -64,33 +69,53 @@ public class BonusGame : MonoBehaviour
 
 
         }
-        else if (Chest.incorrect)
+        else if (Chest.inCorrect)
         {
             animator.SetTrigger("Lose");
+            Chest.inCorrect = false;
         }
-       
-        if (!EventManager.isPause)
-        {
-            spawner.SetActive(true);
-        }
-    }
 
-    public void CloseBonus()
+
+    }
+    
+    public void OpenContinuePanel()
     {
-        foreach (var chest in chests)
-        {
-            chest.hasTreasure = false;
-        }
+        continuePanel.SetActive(true);
 
-        animator.SetTrigger("2");
-        bonusPanel.SetActive(false);
-        EventManager.SendContinueGame();
     }
+    
     public void OffImage()
     {
         foreach (var chest in chestss)
         {
             chest.enabled = false;
+        }
+
+        bonusTextImg.enabled = false;
+    }
+    public void Continue()
+    {
+        foreach (var chest in chests)
+        {
+            chest.hasTreasure = false;
+        }
+        if (continuePanel.activeInHierarchy)
+        {
+            EventManager.SendContinueGame();
+            bonusPanel.SetActive(false);
+            EventManager.SetPlayerFrozen(false);
+            EventManager.SendGameUnPaused();
+            spawner.SetActive(true);
+        }
+      
+       
+    }
+
+    public void AddHealth()
+    {
+        if (Player.healthPoints < 4)
+        {
+            Player.healthPoints++;
         }
     }
 

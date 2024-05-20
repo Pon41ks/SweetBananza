@@ -15,7 +15,7 @@ public class Parallax : MonoBehaviour
     {
         if (!EventManager.isPause)
         {
-            float speed = GameManager.Instance.gameSpeed / transform.localScale.x;
+            float speed = GameManager.Instance.GameSpeed / transform.localScale.x;
             meshRenderer.material.mainTextureOffset += direction * speed * Time.deltaTime;
         }
         
