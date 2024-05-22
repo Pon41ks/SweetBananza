@@ -30,7 +30,7 @@ public class BonusGame : MonoBehaviour
         bonusTextImg.enabled = true;
         bonusText.SetActive(true);
         content.SetActive(true);
-        EventManager.SendGamePaused();
+        EventManager.SetGamePaused();
         spawner.SetActive(false);
         EventManager.SetPlayerFrozen(true);
         animator.SetTrigger("ChestOpened");
@@ -104,7 +104,7 @@ public class BonusGame : MonoBehaviour
             EventManager.SendContinueGame();
             bonusPanel.SetActive(false);
             EventManager.SetPlayerFrozen(false);
-            EventManager.SendGameUnPaused();
+            
             spawner.SetActive(true);
         }
       

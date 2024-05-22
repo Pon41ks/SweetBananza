@@ -37,7 +37,7 @@ public class WheelOfFortune : MonoBehaviour
         continuePanel.SetActive(false);
         winText.SetActive(false);
         LoseText.SetActive(false);
-        EventManager.SendGamePaused();
+        EventManager.SetGamePaused();
         spawner.SetActive(false);
         animator.SetTrigger("OpenWheel");
     }
@@ -95,8 +95,8 @@ public class WheelOfFortune : MonoBehaviour
             winOrLosePanel.SetActive(false);
             transform.rotation = Quaternion.identity;
             EventManager.SetPlayerFrozen(false);
-            EventManager.SendGameUnPaused();
-            spawner.SetActive(true);
+            
+          spawner.SetActive(true);
         }
     }
 

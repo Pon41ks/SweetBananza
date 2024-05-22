@@ -43,7 +43,7 @@ public class Animate : MonoBehaviour
         yield return new WaitForSecondsRealtime(1);
         one.SetActive(false);
         pausePanel.enabled = false;
-        EventManager.SendGameUnPaused();
+        EventManager.SetGamePaused();
         Time.timeScale = 1f;
         EventManager.SetPlayerFrozen(false);
         yield return new WaitForEndOfFrame();

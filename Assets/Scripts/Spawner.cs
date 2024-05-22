@@ -19,7 +19,6 @@ public class Spawner : MonoBehaviour
 
 
 
-
     private void OnEnable()
     {
         Invoke(nameof(Spawn), Random.Range(minSpawnRate, maxSpawnRate));

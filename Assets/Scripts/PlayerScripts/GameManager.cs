@@ -27,11 +27,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gameOverScoreText;
     [SerializeField] private TextMeshProUGUI gameOverGrapeCountText;
     [SerializeField] private GameObject bonus;
+    [SerializeField] private GameObject menuButtons;
     [SerializeField] private GameObject playButton;
     [SerializeField] private GameObject upPanel;
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject hardwareButtonHandler;
     [SerializeField] private GameObject logo;
+    [SerializeField] private GameObject settingsPanel;
+    
    
 
     private Player player;
@@ -40,6 +43,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         GameSpeed = initialGameSpeed;
+       
         SaveData.Current = (SaveData)SerializationManager.Load();
         if (Instance == null)
         {
@@ -77,10 +81,11 @@ public class GameManager : MonoBehaviour
 
     public void NewGame()
     {
+        EventManager.SendGameIsOver(false);
+        EventManager.SendCanControl();
         score = 0;
-
+        menuButtons.SetActive(false);
         isGameStart = true;
-        player.transform.position = new Vector3(-1.67f, -2.84f, 81.57f);  // Replace with meaningful constants
         Player.healthPoints = healthPoints;
         foreach (var obstacle in FindObjectsOfType<Obstacles>())
         {
@@ -106,6 +111,42 @@ public class GameManager : MonoBehaviour
         gameOverPanel.SetActive(false);
     }
 
+    public void OpenMenu()
+    {
+        foreach (var obstacle in FindObjectsOfType<Obstacles>())
+        {
+            Destroy(obstacle.gameObject);
+        }
+        if (EventManager.isPause)
+        {
+            EventManager.SetGamePaused();
+        }
+        EventManager.SendGameIsOver(false);
+        EventManager.SetPlayerFrozen(false);
+        if (player != null)
+            player.gameObject.SetActive(false);
+
+        if (spawner != null)
+            spawner.gameObject.SetActive(false);
+
+        if (settingsPanel.activeInHierarchy)
+        {
+            settingsPanel.SetActive(false);
+            
+        }
+
+        Time.timeScale = 1;
+        playButton.SetActive(true);
+        GameSpeed = initialGameSpeed;
+        menuButtons.SetActive(true);
+        logo.SetActive(true);
+        hardwareButtonHandler.SetActive(true);
+        gameOverPanel.SetActive(false);
+        upPanel.SetActive(false);
+        
+
+    }
+
     public void GameOver()
     {
         isGameStart = false;
@@ -121,13 +162,15 @@ public class GameManager : MonoBehaviour
         if (spawner != null)
             spawner.gameObject.SetActive(false);
 
-        hardwareButtonHandler.SetActive(false);
+        //hardwareButtonHandler.SetActive(false);
 
         gameOverGrapeCountText.text = EventManager.collectedFruits.ToString();
         gameOverScoreText.text = Mathf.RoundToInt(score).ToString("D4");
         if (!EventManager.isNewRecord)
         {
+            
             gameOverPanel.SetActive(true);
+            EventManager.SendGameIsOver(true);
         }
     }
    
@@ -148,8 +191,7 @@ public class GameManager : MonoBehaviour
         {
             GameSpeed += gameSpeedIncrease * Time.deltaTime;
             score += GameSpeed / 2f * Time.deltaTime;
-            if (spawner != null)
-                spawner.gameObject.SetActive(true);
+            
         }
 
         grapeCountText.text = EventManager.collectedFruits.ToString();

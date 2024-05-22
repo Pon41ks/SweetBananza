@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,6 +12,8 @@ public static class EventManager
     public static bool isCantControl { get; private set; }
     public static bool isPause { get; private set; }
     public static bool isFrozen { get; private set; }
+    
+    public static bool isGameOver { get; private set; }
 
 
 
@@ -23,8 +26,19 @@ public static class EventManager
     public static readonly UnityEvent OnPlayerIsFrozen = new();
     public static readonly UnityEvent OnPlayerUnFrozen = new();
     public static readonly UnityEvent OnContinueGame = new();
+    public static readonly UnityEvent OnGameOver = new();
 
-
+     
+    public static void SendGameIsOver(bool overed)
+    {
+       isGameOver = overed;
+        if (overed)
+        {
+            isGameOver = true;
+            OnGameOver.Invoke();
+        }
+        
+    }
     public static void SendContinueGame()
     {
         OnContinueGame.Invoke();
@@ -44,18 +58,19 @@ public static class EventManager
     }
 
 
-    public static void SendGamePaused()
+    public static void SetGamePaused()
     {
-        isPause = true;
-        OnSpinStart.Invoke();
+        if (isPause)
+        {
+            isPause = false;
+        }
+        else
+        {
+            isPause = true;
+        }
+        Debug.Log(isPause);
     }
-
-
-    public static void SendGameUnPaused()
-    {
-        isPause = false;
-
-    }
+   
     public static void SendFruitIsColected()
     {
         collectedFruits += 1;

@@ -43,7 +43,8 @@ public class Player : MonoBehaviour, IControllAble
 
     private void OnEnable()
     {
-        
+        isJumping = false;
+        isSitting = false;
         isCanHitting = true;
         OffAnimation();
         character.height = 9.11f;
@@ -142,6 +143,7 @@ public class Player : MonoBehaviour, IControllAble
     }
 
 
+    /*
     private IEnumerator CanHitting()
     {
         isCanHitting = false;
@@ -149,18 +151,23 @@ public class Player : MonoBehaviour, IControllAble
         isCanHitting = true;
 
     }
+    */
     private IEnumerator TakingHit()
     {
         if (!isSitting && !isJumping)
         {
             animator.SetTrigger("Hit");
+            isCanHitting = false;
             character.height = 5.68f;
         }
         spriteRenderer.color = colorRed;
 
         yield return new WaitForSeconds(0.4f);
+        
         spriteRenderer.color = colorWhite;
         character.height = 9.11f;
+        yield return new WaitForSeconds(0.8f);
+        isCanHitting = true;
     }
 
   
@@ -176,7 +183,7 @@ public class Player : MonoBehaviour, IControllAble
                 var target = GetComponent<IDamageable>();
                 target?.TakeHit();
                 healthPoints -= 1;
-                StartCoroutine(CanHitting());
+                //StartCoroutine(CanHitting());
                 GameManager.Instance.TakingHit();
 
                 if (healthPoints <= 0)

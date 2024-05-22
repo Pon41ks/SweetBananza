@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -12,7 +13,7 @@ public class SceneLoader : MonoBehaviour
     {
         if (isLoadingIsFinished)
         {
-            Load();
+            StartCoroutine(Wait());
         }
         
         for (int i = 0; i < 10; i++)
@@ -24,6 +25,13 @@ public class SceneLoader : MonoBehaviour
             }
         }
     }
+
+    private IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(1);
+        Load();
+    }
+
     private void Load()
     {
 

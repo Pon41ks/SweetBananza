@@ -49,13 +49,15 @@ namespace UISwitcher
 
         public void OpenSettings()
         {
-            Time.timeScale = 0f;
+            EventManager.SetGamePaused();
+            EventManager.SetPlayerFrozen(true);
             settingsPanel.SetActive(true);
             EventManager.SendCantControl();
         }
         public void CloseSettings()
         {
-            Time.timeScale = 1f;
+            EventManager.SetGamePaused();
+            EventManager.SetPlayerFrozen(false);
             EventManager.SendCanControl();
             settingsPanel.SetActive(false);
         }

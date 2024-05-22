@@ -1,4 +1,4 @@
-Library: /Users/ivantrusilin/Documents/GitHub/SweetBananza/Temp/BurstOutput/tempburstlibs/arm64-v8a/lib_burst_generated
+Library: C:\Projects\SweetBananza\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
 --platform=Android
 --backend=burst-llvm-16
 --target=ARMV8A_AARCH64
@@ -30,11 +30,11 @@ Library: /Users/ivantrusilin/Documents/GitHub/SweetBananza/Temp/BurstOutput/temp
 --assembly-defines=Unity.Mathematics;
 --assembly-defines=Unity.TextMeshPro;
 --assembly-defines=UnityEngine;
---generate-link-xml=Temp/burst.link.xml
---temp-folder=/Users/ivantrusilin/Documents/GitHub/SweetBananza/Temp/Burst
---key-folder=/Applications/Unity/Hub/Editor/2022.3.25f1/PlaybackEngines/AndroidPlayer
---decode-folder=/Users/ivantrusilin/Documents/GitHub/SweetBananza/Library/Burst
---output=/Users/ivantrusilin/Documents/GitHub/SweetBananza/Temp/BurstOutput/tempburstlibs/arm64-v8a/lib_burst_generated
+--generate-link-xml=Temp\burst.link.xml
+--temp-folder=C:\Projects\SweetBananza\Temp\Burst
+--key-folder=C:/Program Files/Unity/Hub/Editor/2022.3.25f1/Editor/Data/PlaybackEngines/AndroidPlayer
+--decode-folder=C:\Projects\SweetBananza\Library\Burst
+--output=C:\Projects\SweetBananza\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.Burst.BurstCompiler+BurstCompilerHelper, Unity.Burst, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::IsBurstEnabled()--8c2be93e18276203cbd918daa2748a10

@@ -24,6 +24,7 @@ public class NewRecord : MonoBehaviour
         animator.SetTrigger("Close");
         yield return new WaitForSeconds(1);
         EventManager.SendAnimationEnded();
+        EventManager.SendGameIsOver(true);
     }
 
 }
