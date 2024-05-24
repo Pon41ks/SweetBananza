@@ -1,0 +1,365 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 751d7cb485c014770b640124d1d0a820
+  m_SerializeEntries:
+  - m_GUID: e185e1aa9b77a47e68858c76b29b53af
+    m_Address: Assets/Prefabs/Player.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+    <IsFolder>k__BackingField: 0
+    <BundleFileId>k__BackingField: 
+    <IsInResources>k__BackingField: 0
+    <IsInSceneList>k__BackingField: 0
+    <IsSubAsset>k__BackingField: 0
+    m_CheckedIsScene: 1
+    m_IsScene: 0
+    m_CurrentHash:
+      bytes[0]: 218
+      bytes[1]: 250
+      bytes[2]: 154
+      bytes[3]: 191
+      bytes[4]: 200
+      bytes[5]: 6
+      bytes[6]: 113
+      bytes[7]: 227
+      bytes[8]: 59
+      bytes[9]: 20
+      bytes[10]: 115
+      bytes[11]: 48
+      bytes[12]: 13
+      bytes[13]: 1
+      bytes[14]: 194
+      bytes[15]: 112
+    m_cachedAssetPath: Assets/Prefabs/Player.prefab
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: c6dd5029de8894edfa25078eeecb28fe
+    m_Address: Assets/Prefabs/Bird 1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+    <IsFolder>k__BackingField: 0
+    <BundleFileId>k__BackingField: 
+    <IsInResources>k__BackingField: 0
+    <IsInSceneList>k__BackingField: 0
+    <IsSubAsset>k__BackingField: 0
+    m_CheckedIsScene: 1
+    m_IsScene: 0
+    m_CurrentHash:
+      bytes[0]: 205
+      bytes[1]: 100
+      bytes[2]: 238
+      bytes[3]: 74
+      bytes[4]: 108
+      bytes[5]: 18
+      bytes[6]: 221
+      bytes[7]: 234
+      bytes[8]: 12
+      bytes[9]: 114
+      bytes[10]: 71
+      bytes[11]: 187
+      bytes[12]: 193
+      bytes[13]: 80
+      bytes[14]: 251
+      bytes[15]: 93
+    m_cachedAssetPath: Assets/Prefabs/Bird 1.prefab
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 2edc6ed63637849cc82794da454df8a8
+    m_Address: Assets/Prefabs/Grape.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+    <IsFolder>k__BackingField: 0
+    <BundleFileId>k__BackingField: 
+    <IsInResources>k__BackingField: 0
+    <IsInSceneList>k__BackingField: 0
+    <IsSubAsset>k__BackingField: 0
+    m_CheckedIsScene: 1
+    m_IsScene: 0
+    m_CurrentHash:
+      bytes[0]: 64
+      bytes[1]: 148
+      bytes[2]: 198
+      bytes[3]: 231
+      bytes[4]: 170
+      bytes[5]: 213
+      bytes[6]: 32
+      bytes[7]: 190
+      bytes[8]: 109
+      bytes[9]: 203
+      bytes[10]: 52
+      bytes[11]: 135
+      bytes[12]: 125
+      bytes[13]: 180
+      bytes[14]: 192
+      bytes[15]: 57
+    m_cachedAssetPath: Assets/Prefabs/Grape.prefab
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 48ee580f792dd448d98682c5b06a3cf0
+    m_Address: Assets/Prefabs/Bird.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+    <IsFolder>k__BackingField: 0
+    <BundleFileId>k__BackingField: 
+    <IsInResources>k__BackingField: 0
+    <IsInSceneList>k__BackingField: 0
+    <IsSubAsset>k__BackingField: 0
+    m_CheckedIsScene: 1
+    m_IsScene: 0
+    m_CurrentHash:
+      bytes[0]: 40
+      bytes[1]: 170
+      bytes[2]: 34
+      bytes[3]: 215
+      bytes[4]: 184
+      bytes[5]: 119
+      bytes[6]: 249
+      bytes[7]: 240
+      bytes[8]: 237
+      bytes[9]: 210
+      bytes[10]: 232
+      bytes[11]: 13
+      bytes[12]: 120
+      bytes[13]: 172
+      bytes[14]: 248
+      bytes[15]: 158
+    m_cachedAssetPath: Assets/Prefabs/Bird.prefab
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 2ab6beb930b9f443a905e9cd973b78be
+    m_Address: Assets/Prefabs/Stone.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+    <IsFolder>k__BackingField: 0
+    <BundleFileId>k__BackingField: 
+    <IsInResources>k__BackingField: 0
+    <IsInSceneList>k__BackingField: 0
+    <IsSubAsset>k__BackingField: 0
+    m_CheckedIsScene: 1
+    m_IsScene: 0
+    m_CurrentHash:
+      bytes[0]: 79
+      bytes[1]: 187
+      bytes[2]: 1
+      bytes[3]: 138
+      bytes[4]: 57
+      bytes[5]: 202
+      bytes[6]: 51
+      bytes[7]: 70
+      bytes[8]: 45
+      bytes[9]: 235
+      bytes[10]: 214
+      bytes[11]: 160
+      bytes[12]: 78
+      bytes[13]: 116
+      bytes[14]: 193
+      bytes[15]: 230
+    m_cachedAssetPath: Assets/Prefabs/Stone.prefab
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: c0a6268ed4a464ee2983a96f299842f0
+    m_Address: Assets/Prefabs/Strawberry.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+    <IsFolder>k__BackingField: 0
+    <BundleFileId>k__BackingField: 
+    <IsInResources>k__BackingField: 0
+    <IsInSceneList>k__BackingField: 0
+    <IsSubAsset>k__BackingField: 0
+    m_CheckedIsScene: 1
+    m_IsScene: 0
+    m_CurrentHash:
+      bytes[0]: 197
+      bytes[1]: 186
+      bytes[2]: 117
+      bytes[3]: 43
+      bytes[4]: 240
+      bytes[5]: 201
+      bytes[6]: 171
+      bytes[7]: 155
+      bytes[8]: 170
+      bytes[9]: 205
+      bytes[10]: 59
+      bytes[11]: 118
+      bytes[12]: 245
+      bytes[13]: 178
+      bytes[14]: 136
+      bytes[15]: 5
+    m_cachedAssetPath: Assets/Prefabs/Strawberry.prefab
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: f60e02a36942542b09f65a3c5c2ea60a
+    m_Address: Assets/UI/Group 34638.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+    <IsFolder>k__BackingField: 0
+    <BundleFileId>k__BackingField: 
+    <IsInResources>k__BackingField: 0
+    <IsInSceneList>k__BackingField: 0
+    <IsSubAsset>k__BackingField: 0
+    m_CheckedIsScene: 1
+    m_IsScene: 0
+    m_CurrentHash:
+      bytes[0]: 193
+      bytes[1]: 50
+      bytes[2]: 26
+      bytes[3]: 78
+      bytes[4]: 122
+      bytes[5]: 17
+      bytes[6]: 44
+      bytes[7]: 37
+      bytes[8]: 33
+      bytes[9]: 112
+      bytes[10]: 132
+      bytes[11]: 111
+      bytes[12]: 162
+      bytes[13]: 241
+      bytes[14]: 216
+      bytes[15]: 191
+    m_cachedAssetPath: Assets/UI/Group 34638.png
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: c105e3a876206471b85aaffdb248269b
+    m_Address: Assets/UI/Group 34636.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+    <IsFolder>k__BackingField: 0
+    <BundleFileId>k__BackingField: 
+    <IsInResources>k__BackingField: 0
+    <IsInSceneList>k__BackingField: 0
+    <IsSubAsset>k__BackingField: 0
+    m_CheckedIsScene: 1
+    m_IsScene: 0
+    m_CurrentHash:
+      bytes[0]: 241
+      bytes[1]: 215
+      bytes[2]: 103
+      bytes[3]: 141
+      bytes[4]: 8
+      bytes[5]: 76
+      bytes[6]: 196
+      bytes[7]: 176
+      bytes[8]: 151
+      bytes[9]: 86
+      bytes[10]: 87
+      bytes[11]: 159
+      bytes[12]: 112
+      bytes[13]: 20
+      bytes[14]: 166
+      bytes[15]: 171
+    m_cachedAssetPath: Assets/UI/Group 34636.png
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 501fb216226f042ef8d8efd61fc48e0c
+    m_Address: Assets/UI/Group 34637.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+    <IsFolder>k__BackingField: 0
+    <BundleFileId>k__BackingField: 
+    <IsInResources>k__BackingField: 0
+    <IsInSceneList>k__BackingField: 0
+    <IsSubAsset>k__BackingField: 0
+    m_CheckedIsScene: 1
+    m_IsScene: 0
+    m_CurrentHash:
+      bytes[0]: 22
+      bytes[1]: 180
+      bytes[2]: 201
+      bytes[3]: 106
+      bytes[4]: 217
+      bytes[5]: 167
+      bytes[6]: 125
+      bytes[7]: 34
+      bytes[8]: 35
+      bytes[9]: 200
+      bytes[10]: 202
+      bytes[11]: 12
+      bytes[12]: 237
+      bytes[13]: 88
+      bytes[14]: 141
+      bytes[15]: 49
+    m_cachedAssetPath: Assets/UI/Group 34637.png
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 970354b36f5c841f4960d7cb39cd9596
+    m_Address: Logo
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+    <IsFolder>k__BackingField: 0
+    <BundleFileId>k__BackingField: 
+    <IsInResources>k__BackingField: 0
+    <IsInSceneList>k__BackingField: 0
+    <IsSubAsset>k__BackingField: 0
+    m_CheckedIsScene: 1
+    m_IsScene: 0
+    m_CurrentHash:
+      bytes[0]: 31
+      bytes[1]: 184
+      bytes[2]: 131
+      bytes[3]: 236
+      bytes[4]: 68
+      bytes[5]: 195
+      bytes[6]: 252
+      bytes[7]: 45
+      bytes[8]: 107
+      bytes[9]: 249
+      bytes[10]: 5
+      bytes[11]: 206
+      bytes[12]: 110
+      bytes[13]: 40
+      bytes[14]: 184
+      bytes[15]: 242
+    m_cachedAssetPath: Assets/Prefabs/Logo.prefab
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 85e1c8959fa834b3682bbc564757c147, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 59d0dab4388ba40c395cf23d28dfcf8c, type: 2}
+    - {fileID: 11400000, guid: 1c384af0538294ef38802b43e6a5ae62, type: 2}
+  m_FolderEntryCache: []
+  m_AssetCollectionEntryCache: []
+  <FlaggedDuringContentUpdateRestriction>k__BackingField: 0
+  m_CurrentHash:
+    bytes[0]: 139
+    bytes[1]: 55
+    bytes[2]: 226
+    bytes[3]: 244
+    bytes[4]: 210
+    bytes[5]: 137
+    bytes[6]: 240
+    bytes[7]: 237
+    bytes[8]: 89
+    bytes[9]: 234
+    bytes[10]: 71
+    bytes[11]: 189
+    bytes[12]: 72
+    bytes[13]: 50
+    bytes[14]: 98
+    bytes[15]: 232

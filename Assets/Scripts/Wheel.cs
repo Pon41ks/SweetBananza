@@ -2,11 +2,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using TMPro;
+using UnityEngine.Serialization;
 
 public class WheelOfFortune : MonoBehaviour
 {
-    [Header("Preference")]
-    [SerializeField] private Animate animate;
+    [Header("Preference")] [SerializeField]
+    private Animate animate;
 
     [SerializeField] private Image wheel;
     [SerializeField] private AnimationCurve spinCurve;
@@ -15,14 +16,15 @@ public class WheelOfFortune : MonoBehaviour
     [SerializeField] private GameObject winOrLosePanel;
     [SerializeField] private GameObject continuePanel;
     [SerializeField] private GameObject winText;
-    [SerializeField] private GameObject LoseText;
+    [SerializeField] private GameObject loseText;
     [SerializeField] private GameObject spinButton;
     [SerializeField] private Animator animator;
     [SerializeField] private TextMeshProUGUI winOrLoseText;
 
-    [Header("Properties")]
-    [SerializeField] private float spinDuration = 4f;
-    [SerializeField] private string[] prizes;
+    [Header("Properties")] [SerializeField]
+    private float spinDuration = 4f;
+
+    [SerializeField] private int numberOfSectors;
     [SerializeField] private float[] winningAngles;
     private float startAngle;
     private bool isSpinning = false;
@@ -36,8 +38,7 @@ public class WheelOfFortune : MonoBehaviour
     {
         continuePanel.SetActive(false);
         winText.SetActive(false);
-        LoseText.SetActive(false);
-        EventManager.SetGamePaused();
+        loseText.SetActive(false);
         spawner.SetActive(false);
         animator.SetTrigger("OpenWheel");
     }
@@ -61,10 +62,14 @@ public class WheelOfFortune : MonoBehaviour
 
     private IEnumerator Spin()
     {
-        transform.rotation = Quaternion.identity;
         float elapsedTime = 0f;
-        float endAngle = Random.Range(0f, 360f) + 360f * 5f;
-        Debug.Log("Spin started");
+
+        // Выбираем случайный сектор
+        int selectedSector = Random.Range(0, numberOfSectors);
+        float endAngle =
+            (selectedSector * (360f / numberOfSectors)) + (360f * 5f); // Вращение плюс несколько полных оборотов
+
+        Debug.Log("Spin started, aiming for sector " + selectedSector);
 
         while (elapsedTime < spinDuration)
         {
@@ -74,8 +79,11 @@ public class WheelOfFortune : MonoBehaviour
             yield return null;
         }
 
-        startAngle = wheel.transform.eulerAngles.z;
-        Debug.Log("Spin finished");
+        // Останавливаемся точно на середине выбранного сектора
+        startAngle = selectedSector * (360f / numberOfSectors);
+        wheel.transform.eulerAngles = new Vector3(0, 0, startAngle);
+
+        Debug.Log("Spin finished on sector " + selectedSector);
 
         yield return new WaitForSeconds(1);
         DeterminePrize(startAngle);
@@ -83,20 +91,16 @@ public class WheelOfFortune : MonoBehaviour
         isSpinning = false;
         yield return new WaitForSeconds(3);
         continuePanel.SetActive(true);
-        
     }
 
     public void Continue()
     {
         if (continuePanel.activeInHierarchy)
         {
-            EventManager.SendContinueGame();
             wheelPanel.SetActive(false);
             winOrLosePanel.SetActive(false);
             transform.rotation = Quaternion.identity;
-            EventManager.SetPlayerFrozen(false);
-            
-          spawner.SetActive(true);
+            spawner.SetActive(true);
         }
     }
 
@@ -106,44 +110,88 @@ public class WheelOfFortune : MonoBehaviour
         Debug.Log("Final Angle: " + finalAngle);
 
         // Нормализуем угол, чтобы он был в пределах от 0 до 360 градусов
-        finalAngle = finalAngle % 360;
-        if (finalAngle < 0)
-        {
-            finalAngle += 360;
-        }
+        finalAngle = (finalAngle + 360) % 360;
 
-        // Определяем, в каком секторе остановилось колесо
-        int numberOfSectors = 6; // У нас 6 секторов
+        // Определяем номер сектора, на котором остановилось колесо
         float sectorSize = 360f / numberOfSectors; // Вычисляем размер каждого сектора
+        int sector = Mathf.FloorToInt(finalAngle / sectorSize);
 
-        // Округляем конечный угол до ближайшего кратного 60 градусам
-        float roundedAngle = Mathf.Round(finalAngle / 60f) * 60f;
-
-        // Проверяем, попал ли округленный угол в один из углов выигрыша
-        bool isWinningAngle = false;
+        // Проверяем, попал ли сектор в массив выигрышных секторов
+        bool isWinningSector = false;
         foreach (float angle in winningAngles)
         {
-            if (Mathf.Abs(roundedAngle - angle) < 1f) // Проверяем разницу в 1 градус
+            int winningSector = Mathf.FloorToInt(angle / sectorSize);
+            if (sector == winningSector)
             {
-                isWinningAngle = true;
+                isWinningSector = true;
                 break;
             }
         }
 
-        // Отображаем результат в соответствии с попаданием в выигрышный угол
-        if (isWinningAngle)
+        // Отображаем результат в соответствии с попаданием в выигрышный сектор
+        if (isWinningSector)
         {
-           /// winOrLoseText.text = "Вы выиграли!";
             winText.SetActive(true);
             Debug.Log("Вы выиграли!");
         }
         else
         {
-            LoseText.SetActive(true);
-            //winOrLoseText.text = "Вы проиграли!";
+            loseText.SetActive(true);
             Debug.Log("Вы проиграли!");
         }
     }
 
+
+
+/*
+private void DeterminePrize(float finalAngle)
+{
+    winOrLosePanel.SetActive(true);
+    Debug.Log("Final Angle: " + finalAngle);
+
+    // Нормализуем угол, чтобы он был в пределах от 0 до 360 градусов
+    finalAngle = finalAngle % 360;
+    if (finalAngle < 0)
+    {
+        finalAngle += 360;
+    }
+
+    // Определяем, в каком секторе остановилось колесо
+    int numberOfSectors = 6; // У нас 6 секторов
+    float sectorSize = 360f / numberOfSectors; // Вычисляем размер каждого сектора
+
+    // Округляем конечный угол до ближайшего кратного 60 градусам
+    float roundedAngle = Mathf.Round(finalAngle / 60f) * 60f;
+
+    // Проверяем, попал ли округленный угол в один из углов выигрыша
+    bool isWinningAngle = false;
+    foreach (float angle in winningAngles)
+    {
+        if (Mathf.Abs(roundedAngle - angle) < 1f) // Проверяем разницу в 1 градус
+        {
+            isWinningAngle = true;
+            break;
+        }
+    }
+
+    // Отображаем результат в соответствии с попаданием в выигрышный угол
+    if (isWinningAngle)
+    {
+       /// winOrLoseText.text = "Вы выиграли!";
+        winText.SetActive(true);
+        if (Player.healthPoints < 4)
+        {
+            Player.healthPoints++;
+        }
+        Debug.Log("Вы выиграли!");
+    }
+    else
+    {
+        loseText.SetActive(true);
+        //winOrLoseText.text = "Вы проиграли!";
+        Debug.Log("Вы проиграли!");
+    }
+
+    */
 
 }

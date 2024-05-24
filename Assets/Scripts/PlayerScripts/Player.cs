@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 
@@ -18,12 +19,13 @@ public class Player : MonoBehaviour, IControllAble
     [SerializeField] private Color colorRed;
     [SerializeField] private Color colorWhite;
     [SerializeField] private AudioSource hit;
-
+    [SerializeField] private Image mask;
+    private Animator animator;
 
     [Header("Properties")]
     [SerializeField] private float gravity = 9.81f * 2;
     [SerializeField] private float jumpForce = 10f;
-    private Animator animator;
+    
     public static bool isSitting;
     public static bool isJumping;
     public static bool isCanHitting = true;
@@ -34,22 +36,25 @@ public class Player : MonoBehaviour, IControllAble
 
     private void Awake()
     {
+        
         character = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         EventManager.OnPlayerUnFrozen.AddListener(PlayAnimation);
         hit.volume = 1f;
+        
     }
 
     private void OnEnable()
     {
+        healthPoints = 4;
+        mask.fillAmount = 1;
         isJumping = false;
         isSitting = false;
         isCanHitting = true;
         OffAnimation();
         character.height = 9.11f;
-        
-
+        spriteRenderer.color = colorWhite;
 
     }
     private void OffAnimation()
@@ -63,7 +68,8 @@ public class Player : MonoBehaviour, IControllAble
 
     private void Update()
     {
-
+        mask.fillAmount = (float)healthPoints / 4;
+        
         if (!EventManager.isFrozen)
         {
             
@@ -115,32 +121,54 @@ public class Player : MonoBehaviour, IControllAble
         isJumping = false;
 
     }
+
+    #region JumpAnimate
+
+    public void ChangeCollider()
+    {
+        character.height = 5.78f;
+    }
+
+    public void ChangerCollider2()
+    {
+        character.height = 8.77f;
+    }
+
+    public void ChangerCollider3()
+    {
+        character.height = 9.11f;
+    }
+
+    #endregion
     private void PlayAnimation()
     {
         animator.speed = 1;
     }
 
-    private IEnumerator Sliding()
+
+
+    #region SlideAnimation
+
+    public void OnDown()
     {
-
-        yield return new WaitForSeconds(0.3f);
-
-        isSitting = false;
-
+        character.height = 5.65f;
     }
+
+    public void OnUP()
+    {
+        character.height = 9.11f;
+        isSitting = false;
+    }
+    #endregion
+    
 
     private void SLide()
     {
         isSitting = true;
-        character.height = 5.65f;
         animator.SetTrigger("Slide");
     }
 
-    public void OnAnimationFinished()
-    {
-        StartCoroutine(Sliding());
-        character.height = 9.11f;
-    }
+
 
 
     /*
@@ -201,13 +229,15 @@ public class Player : MonoBehaviour, IControllAble
         }
         if (other.CompareTag("Fruit"))
         {
+            EventManager.SendMultiplierChanged();
+            Destroy(other.gameObject);
+        }
+        if (other.CompareTag("Wheel"))
+        {
             EventManager.SetPlayerFrozen(true);
-            
-            //OffAnimation();
             EventManager.SendFruitIsColected();
             Destroy(other.gameObject);
             Wheelpanel.SetActive(true);
-
         }
     }
 }

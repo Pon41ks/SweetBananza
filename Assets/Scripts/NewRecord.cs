@@ -22,7 +22,7 @@ public class NewRecord : MonoBehaviour
         animator.SetTrigger("NewRecord");
         yield return new WaitForSeconds(3);
         animator.SetTrigger("Close");
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         EventManager.SendAnimationEnded();
         EventManager.SendGameIsOver(true);
     }

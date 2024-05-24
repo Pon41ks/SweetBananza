@@ -60,7 +60,7 @@ public class BonusGame : MonoBehaviour
             {
                 if (chest.hasTreasure)
                 {
-                    animator.SetTrigger("1");
+                    animator.SetTrigger("Win");
 
                 }
 
@@ -71,6 +71,7 @@ public class BonusGame : MonoBehaviour
         }
         else if (Chest.inCorrect)
         {
+            isCorrectChest = false;
             animator.SetTrigger("Lose");
             Chest.inCorrect = false;
         }
@@ -117,6 +118,21 @@ public class BonusGame : MonoBehaviour
         {
             Player.healthPoints++;
         }
+    }
+
+    public void Skip()
+    {
+        if (isCorrectChest)
+        {
+            animator.SetTrigger("WinSkip");
+        }
+        else if (!isCorrectChest)
+        {
+            animator.SetTrigger("LoseSkip");
+            Debug.Log("Lose");
+        }
+        
+        
     }
 
     /*

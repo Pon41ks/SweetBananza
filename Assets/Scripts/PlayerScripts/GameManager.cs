@@ -14,10 +14,8 @@ public class GameManager : MonoBehaviour
     public float gameSpeedIncrease = 0.1f;
     private float score;
     private bool canOpenBonus = true;
-    private const int maxHealthPoints = 4;
-    private int healthPoints = maxHealthPoints;
     private bool isGameStart;
-   
+
 
     [Header("Preference")]
     [SerializeField] private TextMeshProUGUI scoreText;
@@ -34,16 +32,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject hardwareButtonHandler;
     [SerializeField] private GameObject logo;
     [SerializeField] private GameObject settingsPanel;
-    
-   
+
+
 
     private Player player;
     private Spawner spawner;
 
     private void Awake()
     {
-        GameSpeed = initialGameSpeed;
-       
+        GameSpeed = 5f;
+
         SaveData.Current = (SaveData)SerializationManager.Load();
         if (Instance == null)
         {
@@ -84,9 +82,10 @@ public class GameManager : MonoBehaviour
         EventManager.SendGameIsOver(false);
         EventManager.SendCanControl();
         score = 0;
+        GameSpeed = initialGameSpeed;
         menuButtons.SetActive(false);
         isGameStart = true;
-        Player.healthPoints = healthPoints;
+
         foreach (var obstacle in FindObjectsOfType<Obstacles>())
         {
             Destroy(obstacle.gameObject);
@@ -113,6 +112,7 @@ public class GameManager : MonoBehaviour
 
     public void OpenMenu()
     {
+
         foreach (var obstacle in FindObjectsOfType<Obstacles>())
         {
             Destroy(obstacle.gameObject);
@@ -132,10 +132,10 @@ public class GameManager : MonoBehaviour
         if (settingsPanel.activeInHierarchy)
         {
             settingsPanel.SetActive(false);
-            
-        }
 
+        }
         Time.timeScale = 1;
+        GameSpeed = 5f;
         playButton.SetActive(true);
         GameSpeed = initialGameSpeed;
         menuButtons.SetActive(true);
@@ -143,7 +143,7 @@ public class GameManager : MonoBehaviour
         hardwareButtonHandler.SetActive(true);
         gameOverPanel.SetActive(false);
         upPanel.SetActive(false);
-        
+
 
     }
 
@@ -163,17 +163,17 @@ public class GameManager : MonoBehaviour
             spawner.gameObject.SetActive(false);
 
         //hardwareButtonHandler.SetActive(false);
-
+        EventManager.ResetMultiplier();
         gameOverGrapeCountText.text = EventManager.collectedFruits.ToString();
         gameOverScoreText.text = Mathf.RoundToInt(score).ToString("D4");
         if (!EventManager.isNewRecord)
         {
-            
+
             gameOverPanel.SetActive(true);
             EventManager.SendGameIsOver(true);
         }
     }
-   
+
 
     private void ShowGameOverPanel()
     {
@@ -182,7 +182,7 @@ public class GameManager : MonoBehaviour
 
     public void TakingHit()
     {
-        GameSpeed -= 1f;
+        GameSpeed -= 0.4f;
     }
 
     private void Update()
@@ -190,13 +190,14 @@ public class GameManager : MonoBehaviour
         if (isGameStart && !EventManager.isPause)
         {
             GameSpeed += gameSpeedIncrease * Time.deltaTime;
-            score += GameSpeed / 2f * Time.deltaTime;
-            
+            score += GameSpeed / 2f * Time.deltaTime * EventManager.scoreMultiplier;
+
+
         }
 
-        grapeCountText.text = EventManager.collectedFruits.ToString();
-        scoreText.text = Mathf.RoundToInt(score).ToString("D4");
-        heartCountText.text = Player.healthPoints.ToString() + "/" + maxHealthPoints;
+        grapeCountText.text = "x" + EventManager.scoreMultiplier.ToString();
+        scoreText.text = Mathf.RoundToInt(score).ToString("D5");
+        //heartCountText.text = Player.healthPoints.ToString() + "/" + maxHealthPoints;
 
         if (score >= 100 && canOpenBonus)
         {

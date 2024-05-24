@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,23 +11,45 @@ public static class EventManager
     public static bool isCantControl { get; private set; }
     public static bool isPause { get; private set; }
     public static bool isFrozen { get; private set; }
-    
     public static bool isGameOver { get; private set; }
+    public static float scoreMultiplier { get; private set; }
 
 
 
     //public static readonly UnityEvent OnCollectedFruit = new();
     // public static readonly UnityEvent OnClearfruitsCount = new();
-    public static readonly UnityEvent OnRecordChanged = new();
-    public static readonly UnityEvent OnAnimationEnd = new();
-    public static readonly UnityEvent OnSpinStart = new();
-    public static readonly UnityEvent OnSpinFinish = new();
-    public static readonly UnityEvent OnPlayerIsFrozen = new();
-    public static readonly UnityEvent OnPlayerUnFrozen = new();
-    public static readonly UnityEvent OnContinueGame = new();
-    public static readonly UnityEvent OnGameOver = new();
+    public static readonly UnityEvent OnRecordChanged = new UnityEvent();
+    public static readonly UnityEvent OnAnimationEnd = new UnityEvent();
+    public static readonly UnityEvent OnSpinStart = new UnityEvent();
+    public static readonly UnityEvent OnSpinFinish = new UnityEvent();
+    public static readonly UnityEvent OnPlayerIsFrozen = new UnityEvent();
+    public static readonly UnityEvent OnPlayerUnFrozen = new UnityEvent();
+    public static readonly UnityEvent OnContinueGame = new UnityEvent();
+    public static readonly UnityEvent OnGameOver = new UnityEvent();
+    public static readonly UnityEvent OnScoreMultiplierChanged = new UnityEvent();
+    public static readonly UnityEvent OnWebViewOpened = new UnityEvent();
 
-     
+    static EventManager()
+    {
+        scoreMultiplier = 1.0f;
+    }
+
+    public static void SendWebViewOpened(WebViewObject webViewObject)
+    {
+        OnWebViewOpened.Invoke();
+    }
+
+    public static void SendMultiplierChanged()
+    {
+        scoreMultiplier += 0.2f;
+        OnScoreMultiplierChanged.Invoke();
+
+    }
+
+    public static void ResetMultiplier()
+    {
+        scoreMultiplier = 1.0f;
+    }
     public static void SendGameIsOver(bool overed)
     {
        isGameOver = overed;

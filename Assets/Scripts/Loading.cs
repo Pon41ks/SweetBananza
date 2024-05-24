@@ -1,43 +1,39 @@
-using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections;
+using UnityEngine.SceneManagement;
 
-public class SceneLoader : MonoBehaviour
+public class LoadingSimulation : MonoBehaviour
 {
+    [SerializeField] private Image mask;
+    public float loadTime = 2f; // Время загрузки в секундах
 
-    [SerializeField]private Slider loadingSlider;
-    private bool isLoadingIsFinished;
-
-    private void Update()
+    private void Start()
     {
-        if (isLoadingIsFinished)
+        // Запускаем корутину, которая будет симулировать загрузку
+        StartCoroutine(SimulateLoading());
+    }
+
+    private IEnumerator SimulateLoading()
+    {
+        float timer = 0f;
+
+        // Пока таймер меньше времени загрузки
+        while (timer < loadTime)
         {
-            StartCoroutine(Wait());
+            // Увеличиваем таймер
+            timer += Time.deltaTime;
+
+            // Вычисляем прогресс загрузки как долю времени, прошедшего от начала загрузки
+            float progress = timer / loadTime;
+
+            // Обновляем значение слайдера
+            mask.fillAmount = progress;
+
+            yield return null; // Ждем следующего кадра
         }
-        
-        for (int i = 0; i < 10; i++)
-        {
-            loadingSlider.value = i;
-            if (loadingSlider.value >= 0.9)
-            {
-                isLoadingIsFinished = true;
-            }
-        }
+
+        SceneManager.LoadScene("Game");
+        mask.fillAmount = 1f;
     }
-
-    private IEnumerator Wait()
-    {
-        yield return new WaitForSeconds(1);
-        Load();
-    }
-
-    private void Load()
-    {
-
-        SceneManager.LoadScene(1);
-    }
-
-
 }
-

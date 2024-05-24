@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$PROJECT_DIR$" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="2DBirds_Pack3" t="Include">
+          <e p="Documentation 1" t="Include">
+            <e p="Documentation.txt" t="Include" />
+          </e>
+        </e>
+        <e p="Editor" t="Include">
+          <e p="DisableBitcode.cs" t="Include" />
+        </e>
+        <e p="ExternalDependencyManager" t="Include">
+          <e p="Editor" t="Include">
+            <e p="external-dependency-manager_version-1.2.179_manifest.txt" t="Include" />
+          </e>
+        </e>
+        <e p="FacebookSDK" t="Include">
+          <e p="Examples" t="Include">
+            <e p="CloudAndroid" t="Include">
+              <e p="Prefabs" t="Include">
+                <e p="ProductRowPrefab.cs" t="Include" />
+                <e p="PurchaseRowPrefab.cs" t="Include" />
+              </e>
+              <e p="Scripts" t="Include">
+                <e p="AdsPage.cs" t="Include" />
+                <e p="LogScroller.cs" t="Include" />
+                <e p="MainPage.cs" t="Include" />
+                <e p="Menu.cs" t="Include" />
+                <e p="PurchasePage.cs" t="Include" />
+                <e p="SavePage.cs" t="Include" />
+                <e p="SettingsMenu.cs" t="Include" />
+                <e p="UIState.cs" t="Include" />
+                <e p="Utility.cs" t="Include" />
+              </e>
+            </e>
+            <e p="InputSystemWarning.cs" t="Include" />
+            <e p="Mobile" t="Include">
+              <e p="Scripts" t="Include">
+                <e p="ConsoleBase.cs" t="Include" />
+                <e p="LogView.cs" t="Include" />
+                <e p="MenuBase.cs" t="Include" />
+                <e p="SubMenus" t="Include">
+                  <e p="AccessTokenMenu.cs" t="Include" />
+                  <e p="AppEvents.cs" t="Include" />
+                  <e p="AppLinks.cs" t="Include" />
+                  <e p="AppRequests.cs" t="Include" />
+                  <e p="DialogShare.cs" t="Include" />
+                  <e p="GraphRequest.cs" t="Include" />
+                  <e p="MainMenu.cs" t="Include" />
+                  <e p="Pay.cs" t="Include" />
+                  <e p="Subscription.cs" t="Include" />
+                  <e p="TournamentsMenu.cs" t="Include" />
+                  <e p="UploadToMediaLibrary.cs" t="Include" />
+                </e>
+                <e p="UIInputHelper.cs" t="Include" />
+              </e>
+            </e>
+            <e p="Windows" t="Include">
+              <e p="FBWindowsA2UNotificationsManager.cs" t="Include" />
+              <e p="FBWindowsADSManager.cs" t="Include" />
+              <e p="FBWindowsExampleTabsManager.cs" t="Include" />
+              <e p="FBWindowsFriendsManager.cs" t="Include" />
+              <e p="FBWindowsGraphAPIManager.cs" t="Include" />
+              <e p="FBWindowsInitManager.cs" t="Include" />
+              <e p="FBWindowsLoginManager.cs" t="Include" />
+              <e p="FBWindowsLogsManager.cs" t="Include" />
+              <e p="FBWindowsPhysicalGamepadManager.cs" t="Include" />
+              <e p="FBWindowsPurchaseManager.cs" t="Include" />
+              <e p="FBWindowsReferralsManager.cs" t="Include" />
+              <e p="FBWindowsShareManager.cs" t="Include" />
+              <e p="FBWindowsSoftKeyboardManager.cs" t="Include" />
+              <e p="FBWindowsTournamentsManager.cs" t="Include" />
+              <e p="FBWindowsVirtualGamepadManager.cs" t="Include" />
+            </e>
+          </e>
+          <e p="link.xml" t="Include" />
+          <e p="Plugins" t="Include">
+            <e p="Editor" t="Include">
+              <e p="Dependencies.xml" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="FaceBookSdk.cs" t="Include" />
+        <e p="GameOverAnim.cs" t="Include" />
+        <e p="Plugins" t="Include">
+          <e p="Android" t="Include">
+            <e p="AndroidManifest.xml" t="Include" />
+          </e>
+          <e p="Demigiant" t="Include">
+            <e p="DOTween" t="Include">
+              <e p="Modules" t="Include">
+                <e p="DOTweenModuleAudio.cs" t="Include" />
+                <e p="DOTweenModuleEPOOutline.cs" t="Include" />
+                <e p="DOTweenModulePhysics.cs" t="Include" />
+                <e p="DOTweenModulePhysics2D.cs" t="Include" />
+                <e p="DOTweenModuleSprite.cs" t="Include" />
+                <e p="DOTweenModuleUI.cs" t="Include" />
+                <e p="DOTweenModuleUnityVersion.cs" t="Include" />
+                <e p="DOTweenModuleUtils.cs" t="Include" />
+              </e>
+              <e p="readme.txt" t="Include" />
+            </e>
+          </e>
+          <e p="Editor" t="Include">
+            <e p="UnityWebViewPostprocessBuild.cs" t="Include" />
+          </e>
+          <e p="WebViewObject.cs" t="Include" />
+        </e>
+        <e p="Scripts" t="Include">
+          <e p="Addresable.cs" t="Include" />
+          <e p="Animate.cs" t="Include" />
+          <e p="AnimateCurve.cs" t="Include" />
+          <e p="BonusGame.cs" t="Include" />
+          <e p="Chest.cs" t="Include" />
+          <e p="EventManager.cs" t="Include" />
+          <e p="HardwareButtonHandler.cs" t="Include" />
+          <e p="Loading.cs" t="Include" />
+          <e p="MenuButtons.cs" t="Include" />
+          <e p="NewRecord.cs" t="Include" />
+          <e p="Obstacles.cs" t="Include" />
+          <e p="OpenBrowser.cs" t="Include" />
+          <e p="Parallax" t="Include">
+            <e p="Parallax.cs" t="Include" />
+          </e>
+          <e p="PlayerScripts" t="Include">
+            <e p="CharacterInputController.cs" t="Include" />
+            <e p="GameManager.cs" t="Include" />
+            <e p="HealthView.cs" t="Include" />
+            <e p="IcontrollAble.cs" t="Include" />
+            <e p="IDamageable.cs" t="Include" />
+            <e p="Player.cs" t="Include" />
+            <e p="SwipeDetection.cs" t="Include" />
+          </e>
+          <e p="SaveSystem" t="Include">
+            <e p="SaveData.cs" t="Include" />
+            <e p="SerializationManager.cs" t="Include" />
+          </e>
+          <e p="Settings.cs" t="Include" />
+          <e p="Spawner.cs" t="Include" />
+          <e p="WebView.cs" t="Include" />
+          <e p="Wheel.cs" t="Include" />
+          <e p="WinBonus.cs" t="Include" />
+        </e>
+        <e p="TextMesh Pro" t="Include">
+          <e p="Fonts" t="Include">
+            <e p="LiberationSans - OFL.txt" t="Include" />
+          </e>
+          <e p="Resources" t="Include">
+            <e p="LineBreaking Following Characters.txt" t="Include" />
+            <e p="LineBreaking Leading Characters.txt" t="Include" />
+          </e>
+          <e p="Shaders" t="Include">
+            <e p="TMP_Bitmap-Custom-Atlas.shader" t="Include" />
+            <e p="TMP_Bitmap-Mobile.shader" t="Include" />
+            <e p="TMP_Bitmap.shader" t="Include" />
+            <e p="TMP_SDF Overlay.shader" t="Include" />
+            <e p="TMP_SDF SSD.shader" t="Include" />
+            <e p="TMP_SDF-Mobile Masking.shader" t="Include" />
+            <e p="TMP_SDF-Mobile Overlay.shader" t="Include" />
+            <e p="TMP_SDF-Mobile SSD.shader" t="Include" />
+            <e p="TMP_SDF-Mobile.shader" t="Include" />
+            <e p="TMP_SDF-Surface-Mobile.shader" t="Include" />
+            <e p="TMP_SDF-Surface.shader" t="Include" />
+            <e p="TMP_SDF.shader" t="Include" />
+            <e p="TMP_Sprite.shader" t="Include" />
+            <e p="TMPro.cginc" t="Include" />
+            <e p="TMPro_Mobile.cginc" t="Include" />
+            <e p="TMPro_Properties.cginc" t="Include" />
+            <e p="TMPro_Surface.cginc" t="Include" />
+          </e>
+          <e p="Sprites" t="Include">
+            <e p="EmojiOne Attribution.txt" t="Include" />
+            <e p="EmojiOne.json" t="Include" />
+          </e>
+        </e>
+        <e p="UISwitcher" t="Include">
+          <e p="Example" t="Include">
+            <e p="Example.cs" t="Include" />
+          </e>
+          <e p="readme.txt" t="Include" />
+          <e p="UISwitcher" t="Include">
+            <e p="Scripts" t="Include">
+              <e p="Editor" t="Include">
+                <e p="ContextMenuUtility.cs" t="Include" />
+                <e p="CreateUtility.cs" t="Include" />
+                <e p="UINullableToggleEditor.cs" t="Include" />
+                <e p="UISwitcherEditor.cs" t="Include" />
+              </e>
+              <e p="UINullableToggle.cs" t="Include" />
+              <e p="UISwitcher.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="Packages" t="ExcludeRecursive" />
+      <e p="SweetBananza.sln" t="IncludeFlat" />
+      <e p="Temp/bin" t="ExcludeRecursive" />
+    </e>
+    <e p="$USER_HOME$/Library/Caches/JetBrains/Rider2020.2/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/Library/Caches/JetBrains/Rider2020.2/resharper-host/local/Transient/Rider/v202/SolutionCaches/_SweetBananza.26433935.00" t="ExcludeRecursive" />
+  </component>
+</project>

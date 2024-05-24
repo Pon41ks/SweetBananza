@@ -9,8 +9,5 @@ public class MenuButtons : MonoBehaviour
         Application.Quit();
         Debug.Log("Quit");
     }
-    public void OpenPrivacyPolicy()
-    {
-        Debug.Log("PrivacyPolicy");
-    }
+
 }
